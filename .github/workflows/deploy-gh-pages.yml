@@ -1,0 +1,10 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  call_workflow:
+    uses: FranCalveyra/conc-summary/.github/workflows/cd.yml@main
