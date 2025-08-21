@@ -6,6 +6,7 @@
 # Contenido de las clases 
 - [Introducción](./introduccion.md)
 - [Clase 2](./clase_2.md)
+- [Comunicación](./clase_3.md)
 
 # Práctica
 - [Guía Introductoria](./Práctica/guia_intro.md)
