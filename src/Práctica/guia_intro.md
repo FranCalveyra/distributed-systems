@@ -86,7 +86,7 @@ Busque ejemplos conocidos de problemas relacionados con cada uno de los ítems:
 ### Ejercicio 2
 Para cada uno de esos problemas, busque ejemplos donde se han resuelto.
 - Por ejemplo: los discos hot swap, que se pueden reemplazar sin apagar el equipo
-
+#### Respuesta
 | Problema                       | Ejemplo                                                                                                              |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
 | Las computadoras se rompen     | Google Spanner replica datos en varios continentes, de modo que si un datacenter falla, otro sigue respondiendo.     |

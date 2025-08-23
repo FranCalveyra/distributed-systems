@@ -10,3 +10,4 @@
 
 # Práctica
 - [Guía Introductoria](./Práctica/guia_intro.md)
+- [Guía Comunicación](./Práctica/guia_comunicacion.md)

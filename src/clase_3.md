@@ -42,7 +42,7 @@ No solemos interactuar mucho con las capas debajo de la de aplicación.
 
 ## Capa de Middleware
 Tanenbaum y otros autores terminan diferenciando la capa de middleware: procesos que corresponden a la capa de aplicación pero proveen servicios generales a otros procesos
-- DNS le permite a las aplicaciones encontrar direccioens de red asociados a nombres (domains)
+- DNS le permite a las aplicaciones encontrar direcciones de red asociados a nombres (domains)
 - Autenticación y autorización, que permiten identificar y permitir o denegar acceso
 - Mismo lo hacemos a **nivel capa de aplicación** casi siempre, cuando implementamos o usamos (ej: [Auth0](https://auth0.com/)) **Authentication Middlewares**, que validan si un usuario está autenticado y/o autorizado para realizar cierta acción.
 
@@ -169,7 +169,7 @@ El modelo PUSH/PULL lo que permite es distribuir los mensajes entre todos los "o
 [Ver ejemplo de Rodri]
 Todos los procesos/nodos en MPI tienen un rango. Si el rango es 0, hablamos del nodo padre, que va a crear la data (generalmente).
 
-### MoM
+### MoM (Message Oriented Middleware)
 Llegamos al tipo de middleware basado en mensajes más importante: los sistemas de encolado de mensajes que proveen mecanismos de comunicación persistente asíncrona
 La única garantía que nos dan estos sistemas es que el mensaje va a ser insertado en la queue de destino. Y nada más.
 
