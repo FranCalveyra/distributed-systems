@@ -21,7 +21,7 @@ Para comunicar 2 procesos, es necesaria alguna interfaz que medie entre estos. P
 
 **¿Para qué lo estudiamos?**
 - Porque es el método por el que los procesos distribuidos comparten información, lo que lo vuelve una pieza indispensable para hacerlos funcionar, y de forma eficiente.
-- Porque el tipo de comunicación está fuertemente relacionado a requerimientos funcionales y no funcionales. Son ... **de arquitectura**
+- Porque el **tipo de comunicación** está fuertemente relacionado a requerimientos funcionales y no funcionales. Son **decisiones de arquitectura**
 
 ## Modelo OSI
 - El modelo OSI es un marco conceptual que divide la comunicación de redes en 7 capas organizadas de forma jerárquica.
