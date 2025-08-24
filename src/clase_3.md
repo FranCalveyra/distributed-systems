@@ -87,7 +87,7 @@ En un sistema distribuido, que todos los servicios conozcan una referencia parti
 - Lo que se ve en la foto es que la máquina C pide ....
 
 ### Soporte
-Si usamos RPC, el cleinte y el servidor tienen que estar de acuerdo en el protocolo (formato de mensajes + procedimiento para manejar estructuras complejas). Para lograr eso, se puede **especificar la interfza y generar automáticamente los stubs**. Otra alternativa es **hacerlo parte del lenguaje**.
+Si usamos RPC, el cliente y el servidor tienen que estar de acuerdo en el protocolo (formato de mensajes + procedimiento para manejar estructuras complejas). Para lograr eso, se puede **especificar la interfaz y generar automáticamente los stubs**. Otra alternativa es **hacerlo parte del lenguaje**.
 
 [Insertar foto].
 
@@ -156,14 +156,14 @@ El modelo PUSH/PULL lo que permite es distribuir los mensajes entre todos los "o
 - Los sockets tienen 2 problemas: por un lado **no hacen transparente la comunicación**, sigue siendo necesario programar send y recv. Por otro, **fueron diseñados para funcionar sobre TCP/IP**, y no funcionaban sobre protocolos propietarios más eficientes y con soporte para funcionalidad más avanzada.
 - Pero el hecho de que fueran propietarios traía un gran problema: los programas no eran portátiles. Solo funcionaban siempre y cuando el desarrollo fuese sobre la misma plataforma.
 - En 1991 se empieza a desarrollar la **Message Passing Interface**, que ofrece operaciones estándar para el manejo de mensajes.
-- Sin perder la eficiencia y escalabildad que teían los sistemas propietarios ofrece portabilidad y flexibilidad, soportando **diferentes patrones de comunicación**
+- Sin perder la eficiencia y escalabilidad que tenían los sistemas propietarios ofrece portabilidad y flexibilidad, soportando **diferentes patrones de comunicación**
 
 #### Particularidades
 - MPI está pensado para casos muy particulares
 - Requiere que todos los procesos empiecen y terminen en simultáneo y todos sean creados **bajo un mismo contexto** que van a compartir para intercambiar mensajes. Es por esto que los detalles de comunicación son transparentes para el usuario.
 - Funciona mejor en escenarios de **baja latencia y amplio ancho de banda**.
   - Baja latencia en estos escenarios refiere a **nanosegundos**.
-- Tiene **optimizaciones** para compartitr mensajes por memoria, para ser más rápido que la interfaz TCP/IP incluso localmente. **El entorno tiene que ser lo más homogéneo posible**.
+- Tiene **optimizaciones** para compartir mensajes por memoria, para ser más rápido que la interfaz TCP/IP incluso localmente. **El entorno tiene que ser lo más homogéneo posible**.
 - **No está adaptado para funcionar con tolerancia a fallos**, si algo falla todo el sistema falla
 
 [Ver ejemplo de Rodri]

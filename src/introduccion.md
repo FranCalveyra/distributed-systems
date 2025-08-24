@@ -24,7 +24,8 @@ En este contexto, casi que cualquier cosa que quiera compartir es un recurso:
 - Servicios
 - etc.
 
-[Completar]
+Cuando necesito compartir recursos, se merece un sistema distribuido.
+Recurso es un concepto amplio que puede ser cosas o procesos de negocio.
 
 ### Transparencia en el acceso
 **Necesitamos esconder la ubicación de los recursos de la gente que accede**
@@ -197,10 +198,10 @@ Modelos:
 - Interceptor
 
 La diferencia radica en lo siguiente:
-- El wrapper es una implementación distinta.
-  - Ej: File System. Tengo que leer un 
-- El interceptor se pone más abajo, casi a nivel de protocolo, y en lugar de hacer la llamada directa lo manda por detrás.
-  - Ej: File System. No sé qué disco estoy leyendo para acceder a un archivo en particular.
+- El wrapper es una implementación distinta que encapsula una implementación ya existente, pero le agrego comportamiento.
+  - Ej: File System. Tengo que leer un archivo puntual. No sé si estoy leyendo un disco físico o uno en la nube. Con la implementación que ya tenía sólo podía leer discos físicos, pero con el Wrapper que implementaron en la última versión puedo leer discos en OneDrive (?).
+- El interceptor se pone más abajo, casi a nivel de protocolo, y en lugar de hacer la llamada directa lo manda por detrás a otro servicio. Ataja la llamada en el medio y la reenvía.
+  - Ej: File System. No sé qué disco estoy leyendo para acceder a un archivo en particular porque me lo resuelve el Interceptor que opera en el medio.
 
 ### Otra vuelta de la arquitectura por capas
 Cliente - Servidor: el clásico / casi una reliquia.
@@ -208,8 +209,8 @@ Multi capas - algo más común, siempre separamos un poco más.
 
 Ejemplos
 - NFS
-  - No tengo idea
-- WWW
+  - Network File System
+- WWW (World-Wide-Web)
   - Abajo de todo está TCP/IP.
 
 ## Criterios de distribución
@@ -249,6 +250,7 @@ La clásica (toda la compu)
 
 Contenedores
 - Un poco más liviano
+- Docker, Kubernetes
 
 Clientes en entornos virtuales
 - La clásica terminal
@@ -298,7 +300,7 @@ Como se implementa el escalamiento del server HTTP o TCP:
 
 **Escalado horizontal o vertical**
 Ejemplos:
-- VmWAre
+- VmWare
   - Migra una máquina de un equipo al otro y vos no te enteraste.
 - Kubernetes
   - Si vos querés escalarlo, te baja el POD y te lo levanta en otro lado. Te hace un reinicio para este "autoescalado".

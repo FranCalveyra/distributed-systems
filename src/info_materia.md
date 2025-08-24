@@ -17,7 +17,9 @@ Hay parte práctica y parte teórica. La idea es llevar la práctica al día (?)
 - Por escalabilidad
   - Si un programa se vuelve muy pesado y consume muchos recursos, va a ser necesario volverlo distribuido.
 - Por ubicación geográfica
-## Para qué armar una red?
+## ¿Para qué armar una red?
+Si es más fácil hacer todo en la misma compu, ¿para qué me voy a gastar en hacer una red?
+
 Esencialmente, por 2 motivos:
 - Por diseño/definición es distribuido
   - Red de bancos
@@ -84,11 +86,11 @@ Un buen diseño de un sistema distribuido (qué pasa cuando se rompe, cómo enca
 
 **¿Qué se llevan al final de la materia?**
 - Conocimientos de los aspectos de los sistemas distribuidos
-- Entendimiento de las caracteri2sticas y el impacto d ecada aspecto
-- habilidades básicas para anlizar y evaluar problemas y soluciones
+- Entendimiento de las características y el impacto de cada aspecto
+- Habilidades básicas para anlizar y evaluar problemas y soluciones
 
 **¿Qué no se llevan?**
-- Conocimiento profundo de alguna solución (ej: kubernetes)
+- Conocimiento profundo de alguna solución (ej: Kubernetes)
 
 **¿Qué capacidades necesitan traer?**
 - Analizar información y situaciones complejas
@@ -98,12 +100,16 @@ Un buen diseño de un sistema distribuido (qué pasa cuando se rompe, cómo enca
 **Teoría (70% de la cursada)**
 - Foco en los conceptos
 - Problemas y características
-- bajada a tierra del libro
+- Bajada a tierra del libro
 
 **Práctica (30% de la cursada)**
-- ...
+- Foco en las habilidades
+- Analizar situaciones
+- Presentación de propuestas
 
-...
+**De parte de que aprenden**
+- Lean los capítulos después de la clase
+- Consultas en la siguiente
 
 ## Evaluaciones
 2 parciales, 11 de septiembre y 30 de octubre
