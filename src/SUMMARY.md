@@ -7,6 +7,7 @@
 - [Introducción](./introduccion.md)
 - [Clase 2](./clase_2.md)
 - [Comunicación](./clase_3.md)
+- [Coordinación](./coordinacion.md)
 
 # Práctica
 - [Guía Introductoria](./Práctica/guia_intro.md)
