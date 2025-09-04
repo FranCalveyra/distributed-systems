@@ -68,7 +68,7 @@ Al presentar RPC, se planteó que la comunicación tiene que ser tan simple como
 
 `RPC` es un **modelo de comunicación** que permite a un programa ejecutar procedimientos en otra máquina como si fuesen locales, cuya idea es esconder la complejidad de la red: yo llamo a la función `sumar(2,3)` desde mi notebook, y en lugar de correrlo localmente lo estoy corriendo en una Raspberry PI que tengo a 40 metros.
 
-> Procedimiento != Función. Un procedimiento no devuelve un valor, es similar a una _void function_. Por eso RPC usa **procedimientos**.
+> Procedimiento $ \ne $ Función. Un procedimiento no devuelve un valor, es similar a una _void function_. Por eso RPC usa **procedimientos**.
 
 **Stub**: código que, en principio, no cumple el problema que estamos resolviendo, pero tiene herramientas que te brindan formas de hacerlo. Se encarga de transformar parámetros pasados entre el cliente y el servidor durante un RPC.
 
@@ -305,6 +305,14 @@ Para poder enviar un mensaje a una queue es necesario conocer la queue a la que 
 Hay sistemas donde la queue la vamos a sacar y vamos a administrar la queue como un proceso aparte. El chiste es que los procesos se puedan morir y revivir sin perder consistencia.
 - Si se muere el proceso de la queue en estos casos (pensando en queues que viven en memoria), se pierden los mensajes
 - Puede darse el caso de la queue
+
+![Message Broker](./assets/message_broker.png)
+- Los brokers son, a grosso modo, intermediarios que operan entre los participantes de un proceso de comunicación, que "se fijan como hacer el pasamano de mensajes", hablando en criollo.
+- Las distintas colas que maneja son por las **diferentes prioridades** que maneja el broker
+- Está hecho para trabajar de manera modular, de modo que si un nuevo cliente quiere interactuar con algo desconocido para el broker, éste sólo debe "**instalar el plugin**" para manejar a este nuevo cliente
+- Las reglas de negocio al cual pertenece el broker particular deben ser conocidas por este mismo, **no debe ser agnóstico** a estas.
+
+**Tiempo real**: tiene que llegar en un orden correcto, pausado en el tiempo y en un momento específico en el tiempo. Es decir, debe respetar el orden y el tiempo que tardaría en la realidad, tiene que darse en los tiempos en los que yo espero percibir eso en la realidad.
 
 ## Broadcasting
 Consiste en mandarle un mensaje a todos los oyentes/disponibles.

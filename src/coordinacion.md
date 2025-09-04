@@ -93,12 +93,21 @@ Los relojes lógicos tienen un problema subyacente:
   - ¿La solución? => Un reloj de vectores.
   
 Nosotros sabemos cuántos procesos existen, y por cada posición de ese vector que usamos como reloj tenemos un proceso.
-- Cada proceso mantiene un contador de eventso asociados a c/u de los procesos
+- Cada proceso mantiene un contador de eventos asociados a c/u de los procesos
 - Entonces en todo momento cada proceso tiene su versión local del clock de todos los procesos.
 - Si llega una nueva versión con valores más altos para cualquier posición en comparación con la local, se actualiza.
 
 Cuando detectamos un conflicto en la sincronización de los relojes de vectores, tenemos que tomar alguna decisión arbitraria.
 El manejo de conflictos es muy similar al de los VCS (Git, por ejemplo).
+
+Podemos determinar la posible precedencia de 2 eventos en base a la siguiente proposición:
+
+Sea $V_1 = [x_1, y_1, z_1]$ y $V_2 = [x_2, y_2, z_2]$. Decimos que $V_1 > V_2$ si para toda posición $i$ se cumple que $v_{1,i} \geq v_{2,i}$, y además existe al menos una posición $j$ tal que $v_{1,j} > v_{2,j}$. Es decir, todos los elementos pueden ser iguales o mayores, pero al menos uno debe ser estrictamente mayor; si esto no se cumple, no se puede definir una relación de precedencia estricta entre los vectores.
+
+>A efectos de este ejemplo, se usan sólo 3 procesos para el reloj, pero en un caso real pueden haber N procesos participando.
+
+Sobre el papel, es muy difícil determinar la causalidad de manera definitiva, por lo que decimos que si A ocurre antes que B, **B pudo haber sido causado por A**, pero no asegurarlo.
+
 ## Exclusión mutua
 Hay alguien que tiene el control sobre el recurso en este momento, en principio nadie más puede leerlo ni modificarlo.
 
@@ -116,7 +125,7 @@ Podemos empezar a determinar roles en estos casos, para determinar un esquema de
 
 **Beneficio**: es simple, fácil de entender, administrar, implementar, es sencillo debuggearlo.
 
-### Solución distribuida
+### Solución distribuida - Algoritmo de Ricart?
 - Cuando un proceso quiere acceder a un recurso compartido, envía un mensaje con el nombre del recurso, su ID y su timestamp a todos los nodos (incluso a sí mismo).
 - Luego, hay 3 escenarios diferentes para cada nodo:
   - Si no quiere acceder a ese recurso devuelve un OK
@@ -132,6 +141,7 @@ Podemos empezar a determinar roles en estos casos, para determinar un esquema de
 
 Se puede dar starvation en el caso de que el timestamp de 0 siempre sea más chico que 2 y que los procesos estén desordenados. Esto claramente no va a pasar si usamos una Queue bien estructurada, ya que los procesos se van a ordenar.
 
+**Problema**: Si uno de los procesos se cae, se bloquean todos.
 
 ### Solución distribuida - Token Ring
 Es un anillo en el que se van a organizar los procesos. En principio, un proceso sólo conoce el próximo proceso.

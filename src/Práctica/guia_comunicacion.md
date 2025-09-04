@@ -91,7 +91,9 @@ Person {
 ¿Cuál es la definición de mensaje en el contexto de la comunicación basada en mensajes?
 #### Respuesta
 No está en el libro ni en los slides, así que contesto lo que me parece:
-Es la unidad mínima de comunicación de un sistema distribuido, una unidad de datos que contiene ciertos metadatos ordenados que un **emisor le envía a un cierto destinatario**. En el contexto de un sistema distribuido, tanto emisor como receptor son **procesos**, necesariamente.
+
+Es la unidad mínima de comunicación de un sistema distribuido, una unidad de datos que contiene ciertos metadatos ordenados que un **emisor le envía a un cierto destinatario**. En el contexto de un sistema distribuido, tanto emisor como receptor son **procesos**, necesariamente.\
+A partir de estos mensajes, los procesos pueden **ordenarse y coordinarse**.
 
 ### Ejercicio 2
 ¿En qué escenarios se usa MPI? Listar ejemplos reales y citar fuentes.
@@ -130,4 +132,4 @@ Por último, en cuanto a compatibilidad, MPI no es universal como HTTP. Es un bo
 Esto está explicado muy bien en la teórica, así que veo innecesario hacer los ejercicios.
 
 ## Otros tipos de comunicación
-Voy a hacer estos ejercicios más cerca del parcial.
+Lista 3 message brokers y sus características principales. ¿Es Apache Kafka un **message broker**?
