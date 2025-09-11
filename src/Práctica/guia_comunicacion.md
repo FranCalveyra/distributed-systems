@@ -23,7 +23,7 @@ Desarrollar un párrafo corto sobre cada uno de los temas y comparar o establece
 relación con RPC. Considerar qué aspectos comparten y cómo se diferencian
 
 #### Respuesta
-- **HTTP**: protocolo de comunicación que opera a nivel capa de aplicación, usado para transferir documentos de "hypermedia" como páginas web entre un cliente (generalmente un browser) y un servidor. El modelo de comunicación que sigue es el de REQ/REP, visto en la clase de [Comunicación](../clase_2.md)
+- **HTTP**: protocolo de comunicación que opera a nivel capa de aplicación, usado para transferir documentos de "hypermedia" como páginas web entre un cliente (generalmente un browser) y un servidor. El modelo de comunicación que sigue es el de REQ/REP, visto en la clase de [Comunicación](../clase_3.md)
 - **gRPC**: framework open-source para implementar RPC (Remote Procedure Call) sobre cualquier aplicación. Usa HTTP por debajo, más concretamente HTTP/2. Las APIs REST usan HTTP/1.1
 - **REST** (Representational State Transfer): estilo de arquitectura para web apps que sigue el modelo cliente-servidor, cuya interfaz es uniforme al hacer uso de HTTP como protocolo de comunicación (basada en métodos HTTP como GET, PUT, POST, DELETE).
 - **GraphQL**: estilo de arquitectura orientado a queries hacia APIs, que también opera sobre HTTP. La diferencia principal respecto a REST es que obtiene exactamente la data que pide. 

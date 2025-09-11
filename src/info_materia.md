@@ -87,7 +87,7 @@ Un buen diseño de un sistema distribuido (qué pasa cuando se rompe, cómo enca
 **¿Qué se llevan al final de la materia?**
 - Conocimientos de los aspectos de los sistemas distribuidos
 - Entendimiento de las características y el impacto de cada aspecto
-- Habilidades básicas para anlizar y evaluar problemas y soluciones
+- Habilidades básicas para analizar y evaluar problemas y soluciones
 
 **¿Qué no se llevan?**
 - Conocimiento profundo de alguna solución (ej: Kubernetes)

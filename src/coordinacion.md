@@ -25,7 +25,6 @@ Los teléfonos coordinan sus relojes con un protocolo de coordinación llamado [
 - Una primera solución a este problema es el **Coordinated Universal Time** (UTC), que se mantiene con antenas distribuidas a lo largo del planeta, que emiten un pulso por segundo. También existen satélites que emiten este pulso. Tienen una exactitud de +-10ms y +-5ns respectivamente.
   - Los satélites tienen mucha menos interferencia.
 - Estas antenas y satélites usan relojes atómicos que son mucho más precisos y su sesgo es despreciable.
-  - La pulsación que se envía...
 
 **Precisión y exactitud**
 - Para lograr **precisión** entre dos máquinas tenemos que la diferencia de tiempo entre dos máquinas sea menor o igual a un valor específico
@@ -40,14 +39,14 @@ $$
 
 - P y Q son procesos
 
-Mantener una buena precisión entre máquinas es IMPERATIVA para su coordniación, porque basta un desfasaje de un momento/tick/unidad de tiempo para que reviente todo por los aires.
+Mantener una buena precisión entre máquinas es IMPERATIVA para su coordinación, porque basta un desfasaje de un momento/tick/unidad de tiempo para que reviente todo por los aires.
 
 ### Desviación 
 - Todos los relojes (de computadora) vienen con una desviación conocida, que suele ser de aproximadamente 31.5 segundos por año.
   - Los de mano se suelen desfasar 30 seg por mes.
 - Para mantener los relojes sincronizados, necesitamos realizar **sincronizaciones de manera periódica**
 
-[Insertar gráfico]
+![Desviación](./assets/deviation.png)
 
 ### Algoritmos de sincronización
 #### NTP (Network Time Protocol)
@@ -62,7 +61,7 @@ El Unix TimeStamp tiene el 0 (el primero de todos) en el 01/01/1970
   - El **estrato 1** es el **servidor que existe alrededor** del reloj puntual. Son servidores con mecanismos confiables.
   - De acá para abajo (hasta N) baja la confiabilidad y la exactitud.
 
-[Insertar imagen]
+![NTP](./assets/ntp.png)
 
 ## Relojes lógicos
 - Si no nos interesa llevar un registro con exactitud, una solución como NTP es necesaria.
@@ -81,7 +80,7 @@ El Unix TimeStamp tiene el 0 (el primero de todos) en el 01/01/1970
 - Happens-before es transitivo (A -> B y B -> C => A -> C)
 - Si ni X -> Y ni Y -> X, entonces X e Y son concurrentes.
 
-[Insertar imagen de procesos con relojes lógicos]
+![Relojes lógicos](./assets/logic_clocks.png)
 - Fíjense en la figura de la derecha que los relojes se **auto-ajustan** porque, por definición de Lamport, es imposible recibir un mensaje antes de que se haya enviado.
 - Por tanto, los relojes le agregan uno al momento en el que salió el mensaje desde el otro proceso.
 
@@ -108,13 +107,16 @@ Sea $V_1 = [x_1, y_1, z_1]$ y $V_2 = [x_2, y_2, z_2]$. Decimos que $V_1 > V_2$ s
 
 Sobre el papel, es muy difícil determinar la causalidad de manera definitiva, por lo que decimos que si A ocurre antes que B, **B pudo haber sido causado por A**, pero no asegurarlo.
 
+![Relojes de vectores](./assets/vector_clocks.png)
+![Tabla de precedencia](./assets/precedence_table.png)
+
 ## Exclusión mutua
 Hay alguien que tiene el control sobre el recurso en este momento, en principio nadie más puede leerlo ni modificarlo.
 
 Podemos empezar a determinar roles en estos casos, para determinar un esquema de jerarquía sobre los recursos.
 
 ### Solución centralizada
-[Insertar foto]
+![Solución centralizada](./assets/centralized_solution.png)
 - El coordinador (uno solo) es el que se encarga de proteger/administrar el recurso
 - El resto de procesos le piden acceso al recurso.
   - Si me dice OK, puedo acceder al recurso
@@ -137,7 +139,7 @@ Podemos empezar a determinar roles en estos casos, para determinar un esquema de
 
 ¿Cómo se da cuenta si él mismo quiere acceder al recurso? => Se fija en la queue interna si tiene un mensaje suyo.
 
-[Insertar foto de la State Machine de acceso a recursos]
+![Solución distribuida](./assets/distributed_solution.png)
 
 Se puede dar starvation en el caso de que el timestamp de 0 siempre sea más chico que 2 y que los procesos estén desordenados. Esto claramente no va a pasar si usamos una Queue bien estructurada, ya que los procesos se van a ordenar.
 
@@ -151,6 +153,7 @@ En exclusión mutua, tenemos 2 escenarios:
   - El token tiene que ser difícil de replicar.
 - **Permission Based**: en algún momento conseguimos el permiso del resto de los nodos. El ejemplo anterior es permission-based
 
+![Token Ring](./assets/token_ring.png)
 - Cuando el anillo se inicializa, a uno de los procesos se le da el token. Si en ese momento quiere usar el recurso puede hacerlo, y cuando termina pasa el token al siguiente del anillo. Está prohibido que use el token inmediatamente después de haberlo usado.
 - Si al recibir el token el proceso no quiere acceder al recurso, simplemente pasa el token
 - **Problema**: Si se pierde el token, cuándo se regenera?
@@ -165,7 +168,7 @@ Los necesitamos para poder entender más adelante cosas que vamos a ver al final
 - Los nodos tienen que tener algún mecanismo para elegir y ponerse de acuerdo en cuál es el coordinador
 - Para poder diferenciar a los nodos es necesario que todos tengan un ID único
 - En general lo que se hace es designar como coordinar al proceso con ID más grande.
-- Además es importante que todos los nodos conozcan al resto de nodos. Lo que pueden no conoer es su estado.
+- Además es importante que todos los nodos conozcan al resto de nodos. Lo que pueden no conocer es su estado.
 
 Vamos a usar 2 criterios para elegir un coordinador:
 - Todos los nodos se conocen entre sí
@@ -177,20 +180,24 @@ Los escenarios en los cuales vamos a usar algoritmos de elección son:
 - Cuando se inicializa el sistema y no está decidido el coordinador
 
 ### Algoritmo bully
+![Algoritmo Bully](./assets/bully_algorithm.png)
 - Cuando un proceso detecta que el coordinador no responde, **inicia una elección**
 - Envía un mensaje de elección a todos los nodos con ID mayor al suyo
   - No me interesan los nodos más chicos que el nodo que inicia la votación
 - Si ninguno responde, este nodo gana la elección
-- Si alguno responde signifiac que eese nodo se encarga de segir la elección, repitiendo el mismo proceso.
+- Si alguno responde significa que ese nodo se encarga de seguir la elección, repitiendo el mismo proceso.
 - Si algún proceso se recupera o se suma al sistema, arranca otra elección
   - Si el que aparece es el del ID más grande, le manda un mensaje a todos los nodos diciendo que **él es el coordinador**.
   - Si el que aparece es el más chico, arranca la votación de vuelta.
+![Algoritmo Bully - Segundo caso](./assets/bully_algorithm_2.png)
 
 ### Algoritmo del anillo
 Que el sistema esté diseñado como un anillo no implica que la red de elección sea en forma de anillo. **Son 2 cosas inherentemente diferentes**.
 
+![Algoritmo del anillo](./assets/ring_algorithm.png)
+
 - Los nodos se organizan en una overlay network con forma de anillo.
-- Cuando un nodo detecta que el coordinador no está funcoonando, empieza una elección enviando un mensaje ELECTION con su ID al próximo proceso.
+- Cuando un nodo detecta que el coordinador no está funcionando, empieza una elección enviando un mensaje ELECTION con su ID al próximo proceso.
 - Cada proceso suma su ID a la lista, y envía el mensaje al próximo proceso
 - finalmente el proceso que originó la elección recibe una lista con su propio ID. De todos los IDs, se selecciona el más grande, y lo comparte con un mensaje COORDINATOR con el próximo elemento, a lo largo de todo el anillo.
 - Si cualquier nodo no responde el mensaje se envía al próximo proceso que esté funcionando del anillo.
@@ -212,7 +219,7 @@ Hay un líder que le dice al resto "la versión real es esta".
 - Entonces es muy fácil garantizar que cualquier cambio a la blockchain va a generar un hash necesariamente diferente
 - Esto hace que modificar la blockchain sin que el resto de los validadores se den cuenta es prácticamente.
 - Cada validador produce un hash para el nodo que está procesando, que se llama **digest**.
-- El desafío es calcular el **nonce**: un valor que, cuando se combina con el digest y se hashea, produce un valor co una cierta cantidad de ceros consecutivos al principio del hash final.
+- El desafío es calcular el **nonce**: un valor que, cuando se combina con el digest y se hashea, produce un valor con una cierta cantidad de ceros consecutivos al principio del hash final.
 - El validador que lo encuentre primero pasa a ser líder, pero la probabilidad de encontrar un nonce válido es de $\frac{1}{5 \times 10^{17}}$
 - En general este proceso suele tomar 10 minutos a nivel global
   - Un nodo encontró un nonce a nivel global. 
@@ -222,4 +229,4 @@ Hay un líder que le dice al resto "la versión real es esta".
 - Muchas de las propiedades que asumimos como ciertas en otros escenarios (los mensajes siempre llegan, la topología no cambia, la red es confiable) no son ciertas para sistemas wireless.
 - Necesitamos un algoritmo capaz de elegir al _mejor nodo_
 - Para eso, necesitamos un algoritmo que pueda conseguir información de todos los nodos disponibles en ese momento.
-
+![Wireless Broadcast](./assets/wireless_broadcast.png)

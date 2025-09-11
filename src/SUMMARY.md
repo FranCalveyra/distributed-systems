@@ -12,7 +12,7 @@
 # Práctica
 - [Guía Introductoria](./Práctica/guia_intro.md)
 - [Guía Comunicación](./Práctica/guia_comunicacion.md)
-- [Guía Coordiniación](./Práctica/guia_coordinacion.md)
+- [Guía Coordinación](./Práctica/guia_coordinacion.md)
 
 # Trabajos Prácticos
 - [TP 1](./tps/tp_1.md)

@@ -83,8 +83,8 @@ Hay varias dimensiones relacionadas con la escalabilidad:
 - **En tamaño** (cuántos usuarios o recursos acceden al sistema)
   - Aumenta mucho el tráfico
   - Puedo tener una Raspberry Pi con 124.000.000 intentos de conexión. No va a andar bien ni en pedo, tampoco escala.
-- **En geografía** (si se accede al sistema desde distintas ubcaciones físicas)
-- **En administración** (se puede adminsitrar, aunque crezca)
+- **En geografía** (si se accede al sistema desde distintas ubicaciones físicas)
+- **En administración** (se puede administrar, aunque crezca)
 
 #### Estrategias de escalamiento
 - **Mejorar la latencia**: hacer eficiente la comunicación
@@ -232,7 +232,7 @@ Elegir una forma adecuada para los requerimientos es fundamental.
 
 **Arquitectura del sistema** = distribución física de procesos y conexiones
 > La de sistema es la más técnica.
-**Arquitectura de software** = estuctura funcional y patrones de uso
+**Arquitectura de software** = estructura funcional y patrones de uso
 
 
 # Procesos
@@ -284,7 +284,7 @@ Hay servers que mantienen estado de sus clientes:
 
 Definir que vas a usar un BFF es una decisión de arquitectura de software.
 
-Como se implementa el escalamiento del server HTTP o TCP: 
+Cómo se implementa el escalamiento del server HTTP o TCP: 
 - Balanceador de carga.
   - Es un intermediario que tiene que existir casi siempre en este tipo de sistemas.
   - Es un pasamano que intercepta el mensaje, se fija quién está disponible y se lo manda.
@@ -307,7 +307,7 @@ Ejemplos:
 - Azure
 - AWS
 
-La virtualización y el escalamiento tiene sus chiches para cuando se quiera migrar la infraestructura.
+La virtualización y el escalamiento tienen sus chiches para cuando se quiera migrar la infraestructura.
 
 ## Conclusiones
 Los procesos son la base de cualquier infraestructura de software, aunque sean centralizados o distribuidos.
@@ -316,11 +316,11 @@ La arquitectura interna de los procesos con threads es fundamental para la arqui
 
 La mayoría de las veces, nuestros procesos corren en ambientes virtualizados, y la migración de código se hace de forma transparente.
 
-Sin embargo, es importante entender como los cambios de base afectan los procesos en ejecución.
+Sin embargo, es importante entender cómo los cambios de base afectan los procesos en ejecución.
 
 
 # TP1
-Están pensando en hacer un servicio que dada una IP te devuelva una ubicación, y otro servicio que dada una coordinada te devuelva un clima. 
+Están pensando en hacer un servicio que dada una IP te devuelva una ubicación, y otro servicio que dada una coordenada te devuelva un clima. 
 
 Escalándolo...
 - Cientos de miles de personas tratando de usarlo.

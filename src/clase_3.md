@@ -128,7 +128,7 @@ Los mensajes son finitos, en algún momento terminan, tienen un sentido (por est
 Los mensajes empiezan a ser relevantes en comunicación **asíncrona**, donde empiezan a surgir ciertas preguntas:
 - ¿Qué pasa cuando el **receptor no está activo** en el momento en el que se genera la request?
 - ¿Qué pasa cuando **no queremos o necesitamos que la comunicación sea sincrónica**?
-- Excepto pro algunas variaciones poco comunes, RPC no soporta estos casos. Y por eso necesitamos usar **mensajes**.
+- Excepto por algunas variaciones poco comunes, RPC no soporta estos casos. Y por eso necesitamos usar **mensajes**.
 
 Necesitamos atajar estos problemas donde la comunicación falla, donde no sólo importa la transparencia de alto nivel.
 
@@ -275,7 +275,7 @@ def worker(id):
         time.sleep(work)                            # pretend to work
 ```
 
-REQ/RESP es un modelo 1-1
+REQ/REP es un modelo 1-1
 
 El modelo PUSH/PULL lo que permite es distribuir los mensajes entre todos los "oyentes", y con que uno sólo lo escuche ta bien. <img src="./assets/ta_bien.jpeg" alt="Ta bien meme" width="40" height="40">
 
