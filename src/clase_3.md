@@ -76,7 +76,7 @@ El cliente y el servidor conocen un stub en particular, que sirven como una inte
 
 En resumidas cuentas, es un "middleware" que funciona como capa de abstracción entre cliente y servidor para que el cliente pueda ejecutar un RPC sobre el servidor.
 
-![RPC](./assets/rpc.png)
+![RPC](./assets/comunicacion/rpc.png)
 
 ### Parámetros
 - Manejar parámetros en RPC no es trivial: codificar y decodificar los parámetros se llama **marshalling** (GO MENTIONED 🗣️🗣️) y **unmarshalling**.
@@ -91,7 +91,7 @@ En resumidas cuentas, es un "middleware" que funciona como capa de abstracción 
 Es una referencia que todos los miembros del sistema/programa conocen.
 En un sistema distribuido, que todos los servicios conozcan una referencia particular, se logra teniendo servicios/máquinas que estén dedicadas al pasaje de esa información o de esas referencias. Claramente, esto se hace cuando tenemos objetos relativamente pesados, si paso un int o un boolean por referencias globales usando RPC, soy un forro.
 
-![Global References](./assets/global_refs.png)
+![Global References](./assets/comunicacion/global_refs.png)
 - Lo que se ve en la foto es lo siguiente: 
   - Machine `A` – Objeto local `O1`
     - En la máquina `A` existe un objeto local `O1`.
@@ -111,7 +111,7 @@ En un sistema distribuido, que todos los servicios conozcan una referencia parti
 ### Soporte
 Si usamos RPC, el cliente y el servidor tienen que estar de acuerdo en el protocolo (formato de mensajes + procedimiento para manejar estructuras complejas). Para lograr eso, se puede **especificar la interfaz y generar automáticamente los stubs**. Otra alternativa es **hacerlo parte del lenguaje**.
 
-![Protobuf](./assets/protobuf.png)
+![Protobuf](./assets/comunicacion/protobuf.png)
 
 Las diferentes herramientas de RPC lo hacen de manera automática.
 
@@ -306,7 +306,7 @@ Hay sistemas donde la queue la vamos a sacar y vamos a administrar la queue como
 - Si se muere el proceso de la queue en estos casos (pensando en queues que viven en memoria), se pierden los mensajes
 - Puede darse el caso de la queue
 
-![Message Broker](./assets/message_broker.png)
+![Message Broker](./assets/comunicacion/message_broker.png)
 - Los brokers son, a grosso modo, intermediarios que operan entre los participantes de un proceso de comunicación, que "se fijan como hacer el pasamano de mensajes", hablando en criollo.
 - Las distintas colas que maneja son por las **diferentes prioridades** que maneja el broker
 - Está hecho para trabajar de manera modular, de modo que si un nuevo cliente quiere interactuar con algo desconocido para el broker, éste sólo debe "**instalar el plugin**" para manejar a este nuevo cliente
@@ -321,7 +321,7 @@ Consiste en mandarle un mensaje a varios de los oyentes/disponibles, mas no nece
 - La primera técnica que vamos a explorar es la de multicasting basado en árboles a nivel aplicación
 - La distinción más relevante es que este árbol existe en la capa de aplicación y no la física. Es decir que tenemos una overlay network.
 - ¿Cómo llegamos de A hasta C?
-![Multicasting](./assets/multicasting.png)
+![Multicasting](./assets/comunicacion/multicasting.png)
 
 #### Métricas
 Hay 3 métricas para medir la calidad del árbol: link stress, relative delay penalty (RDP) y tree cost.

@@ -46,7 +46,7 @@ Mantener una buena precisión entre máquinas es IMPERATIVA para su coordinació
   - Los de mano se suelen desfasar 30 seg por mes.
 - Para mantener los relojes sincronizados, necesitamos realizar **sincronizaciones de manera periódica**
 
-![Desviación](./assets/deviation.png)
+![Desviación](./assets/coordinacion/deviation.png)
 
 ### Algoritmos de sincronización
 #### NTP (Network Time Protocol)
@@ -61,7 +61,7 @@ El Unix TimeStamp tiene el 0 (el primero de todos) en el 01/01/1970
   - El **estrato 1** es el **servidor que existe alrededor** del reloj puntual. Son servidores con mecanismos confiables.
   - De acá para abajo (hasta N) baja la confiabilidad y la exactitud.
 
-![NTP](./assets/ntp.png)
+![NTP](./assets/coordinacion/ntp.png)
 
 ## Relojes lógicos
 - Si no nos interesa llevar un registro con exactitud, una solución como NTP es necesaria.
@@ -80,7 +80,7 @@ El Unix TimeStamp tiene el 0 (el primero de todos) en el 01/01/1970
 - Happens-before es transitivo (A -> B y B -> C => A -> C)
 - Si ni X -> Y ni Y -> X, entonces X e Y son concurrentes.
 
-![Relojes lógicos](./assets/logic_clocks.png)
+![Relojes lógicos](./assets/coordinacion/logic_clocks.png)
 - Fíjense en la figura de la derecha que los relojes se **auto-ajustan** porque, por definición de Lamport, es imposible recibir un mensaje antes de que se haya enviado.
 - Por tanto, los relojes le agregan uno al momento en el que salió el mensaje desde el otro proceso.
 
@@ -107,8 +107,8 @@ Sea $V_1 = [x_1, y_1, z_1]$ y $V_2 = [x_2, y_2, z_2]$. Decimos que $V_1 > V_2$ s
 
 Sobre el papel, es muy difícil determinar la causalidad de manera definitiva, por lo que decimos que si A ocurre antes que B, **B pudo haber sido causado por A**, pero no asegurarlo.
 
-![Relojes de vectores](./assets/vector_clocks.png)
-![Tabla de precedencia](./assets/precedence_table.png)
+![Relojes de vectores](./assets/coordinacion/vector_clocks.png)
+![Tabla de precedencia](./assets/coordinacion/precedence_table.png)
 
 ## Exclusión mutua
 Hay alguien que tiene el control sobre el recurso en este momento, en principio nadie más puede leerlo ni modificarlo.
@@ -116,7 +116,7 @@ Hay alguien que tiene el control sobre el recurso en este momento, en principio 
 Podemos empezar a determinar roles en estos casos, para determinar un esquema de jerarquía sobre los recursos.
 
 ### Solución centralizada
-![Solución centralizada](./assets/centralized_solution.png)
+![Solución centralizada](./assets/coordinacion/centralized_solution.png)
 - El coordinador (uno solo) es el que se encarga de proteger/administrar el recurso
 - El resto de procesos le piden acceso al recurso.
   - Si me dice OK, puedo acceder al recurso
@@ -139,7 +139,7 @@ Podemos empezar a determinar roles en estos casos, para determinar un esquema de
 
 ¿Cómo se da cuenta si él mismo quiere acceder al recurso? => Se fija en la queue interna si tiene un mensaje suyo.
 
-![Solución distribuida](./assets/distributed_solution.png)
+![Solución distribuida](./assets/coordinacion/distributed_solution.png)
 
 Se puede dar starvation en el caso de que el timestamp de 0 siempre sea más chico que 2 y que los procesos estén desordenados. Esto claramente no va a pasar si usamos una Queue bien estructurada, ya que los procesos se van a ordenar.
 
@@ -153,7 +153,7 @@ En exclusión mutua, tenemos 2 escenarios:
   - El token tiene que ser difícil de replicar.
 - **Permission Based**: en algún momento conseguimos el permiso del resto de los nodos. El ejemplo anterior es permission-based
 
-![Token Ring](./assets/token_ring.png)
+![Token Ring](./assets/coordinacion/token_ring.png)
 - Cuando el anillo se inicializa, a uno de los procesos se le da el token. Si en ese momento quiere usar el recurso puede hacerlo, y cuando termina pasa el token al siguiente del anillo. Está prohibido que use el token inmediatamente después de haberlo usado.
 - Si al recibir el token el proceso no quiere acceder al recurso, simplemente pasa el token
 - **Problema**: Si se pierde el token, ¿cuándo se regenera?
@@ -180,7 +180,7 @@ Los escenarios en los cuales vamos a usar algoritmos de elección son:
 - Cuando se inicializa el sistema y no está decidido el coordinador
 
 ### Algoritmo bully
-![Algoritmo Bully](./assets/bully_algorithm.png)
+![Algoritmo Bully](./assets/coordinacion/bully_algorithm.png)
 - Cuando un proceso detecta que el coordinador no responde, **inicia una elección**
 - Envía un mensaje de elección a todos los nodos con ID mayor al suyo
   - No me interesan los nodos más chicos que el nodo que inicia la votación
@@ -189,12 +189,12 @@ Los escenarios en los cuales vamos a usar algoritmos de elección son:
 - Si algún proceso se recupera o se suma al sistema, arranca otra elección
   - Si el que aparece es el del ID más grande, le manda un mensaje a todos los nodos diciendo que **él es el coordinador**.
   - Si el que aparece es el más chico, arranca la votación de vuelta.
-![Algoritmo Bully - Segundo caso](./assets/bully_algorithm_2.png)
+![Algoritmo Bully - Segundo caso](./assets/coordinacion/bully_algorithm_2.png)
 
 ### Algoritmo del anillo
 Que el sistema esté diseñado como un anillo no implica que la red de elección sea en forma de anillo. **Son 2 cosas inherentemente diferentes**.
 
-![Algoritmo del anillo](./assets/ring_algorithm.png)
+![Algoritmo del anillo](./assets/coordinacion/ring_algorithm.png)
 
 - Los nodos se organizan en una overlay network con forma de anillo.
 - Cuando un nodo detecta que el coordinador no está funcionando, empieza una elección enviando un mensaje ELECTION con su ID al próximo proceso.
@@ -229,4 +229,4 @@ Hay un líder que le dice al resto "la versión real es esta".
 - Muchas de las propiedades que asumimos como ciertas en otros escenarios (los mensajes siempre llegan, la topología no cambia, la red es confiable) no son ciertas para sistemas wireless.
 - Necesitamos un algoritmo capaz de elegir al _mejor nodo_
 - Para eso, necesitamos un algoritmo que pueda conseguir información de todos los nodos disponibles en ese momento.
-![Wireless Broadcast](./assets/wireless_broadcast.png)
+![Wireless Broadcast](./assets/coordinacion/wireless_broadcast.png)

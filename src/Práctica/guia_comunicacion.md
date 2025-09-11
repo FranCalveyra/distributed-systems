@@ -8,7 +8,7 @@ El modelo OSI no necesariamente representa un protocolo de comunicación puntual
 
 En cambio, se opta por TCP/IP, sobre el que se distingue la capa de **middleware**, la cual es una capa de abstracción que brinda la transparencia de la que carece OSI.
 
-![middleware](../assets/middleware.png)
+![middleware](../assets/comunicacion/middleware.png)
 
 ## RPC
 ### Ejercicio 1
@@ -71,7 +71,7 @@ XML en términos de tamaño, eficiencia y flexibilidad.
 [Protobuf](https://protobuf.dev/) (o Protocol Buffers) son mecanismos de serialización de datos flexibles y extensibles, ya que son agnósticos a la plataforma y al lenguaje. Es como un XML más chico, rápido y simple.\
 Vos definís cómo estructurar los datos una vez, y después usás código específico para leer y escribir esos datos estructurados desde y hacia APIs que lo soportan. (Ver ejemplo en el link)
 
-![Protocol Buffers](../assets/protobuf.webp)
+![Protocol Buffers](../assets/comunicacion/protobuf.webp)
 
 ### Ejercicio 4
 Implementar un servidor en Python y un cliente de JavaScript usando gRPC. El cliente debe
