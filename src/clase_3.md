@@ -3,7 +3,7 @@ Un servidor en Brasil suele ser más caro que en EE.UU, puesto que en USA abunda
 
 Es muy raro que existan servidores en América del Sur.
 
-Si montamos un servicio en servers de Amazon en USA, va a andar bien a pesar de la lejanía. ¿Por qué? => **Hay cables directos** que conectan Argentina con USA-East.
+Si montamos un servicio en servers de Amazon en USA, va a andar bien a pesar de la lejanía. ¿Por qué? $\Longrightarrow$ **Hay cables directos** que conectan Argentina con USA-East.
 
 **CAP**
 - **Consistencia**: si yo escribo A en un lugar, y lo leo desde otro lado, tengo que leer A, sin modificaciones.
@@ -85,7 +85,7 @@ En resumidas cuentas, es un "middleware" que funciona como capa de abstracción 
 - Cuando tratamos con objetos muy complejos o colecciones anidadas el marshalling automático podría no estar disponible. Sería preferible manejarlo de manera manual.
 - Estos problemas se alivian usando **referencias globales**.
 
-¿Por qué no usamos JSON para sincronizar 2 stubs en RPC? => Porque es súper ineficiente, si mando el JSON lo mando entero, no se comprime. Si bien existe RPC para JSON, es una cagada.
+¿Por qué no usamos JSON para sincronizar 2 stubs en RPC? $\Longrightarrow$ Porque es súper ineficiente, si mando el JSON lo mando entero, no se comprime. Si bien existe RPC para JSON, es una cagada.
 
 ### Referencias globales
 Es una referencia que todos los miembros del sistema/programa conocen.

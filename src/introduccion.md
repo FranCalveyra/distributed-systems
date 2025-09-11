@@ -1,7 +1,7 @@
 # Introducción
 ## Objetivos funcionales
 ¿Vale la pena construir un sistema distribuido?
-¿Para qué hago un sistema distribuido? -> Porque tengo que compartir información
+¿Para qué hago un sistema distribuido? $\rightarrow$ Porque tengo que compartir información
 
 ### Objetivos que merecen crear un sistema distribuido
 - **Los principales**:

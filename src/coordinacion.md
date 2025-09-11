@@ -15,7 +15,7 @@ Ya tenemos comunicación, ahora necesitamos averiguar los mecanismos con los cua
   - Este tick es la unidad más chica de tiempo de la que disponemos.
 - El cuarzo para estos relojes oscila a 32768 Hz
   - Tienen una propiedad isoeléctrica por la cual se da la siguiente doble identidad:
-    - Aplico una transformación <=> se genera un pulso eléctrico
+    - Aplico una transformación $\Longleftrightarrow$ se genera un pulso eléctrico
 
 Los teléfonos coordinan sus relojes con un protocolo de coordinación llamado [NTP](https://en.wikipedia.org/wiki/Network_Time_Protocol).
 
@@ -73,14 +73,14 @@ El Unix TimeStamp tiene el 0 (el primero de todos) en el 01/01/1970
 - Si dos procesos no interactúan entonces no es necesario que estén coordinados. Su falta de sincronización no es observable, y por ende no genera problemas.
   - No me interesa saber en qué orden pasaron las cosas si los procesos no se comunican entre sí.
 - Para procesos que interactúan entre sí, Lamport define el **happens-before**
-  - a -> b. A pasa antes que B.
+  - a $\rightarrow$ b. A pasa antes que B.
 - Hay 2 reglas para el **happens-before**.
-  - Si A y B ocurren dentro de un mismo proceso, y A ocurre antes que B, entonces A -> B es cierto.
-  - Si A es el evento en el que un proceso **envía un mensaje X**, y B es el evento en el que **otro proceso recibe el mensaje X**, entonces A -> B es cierto. _Un mensaje no puede recibirse antes de ser enviado_.
-- Happens-before es transitivo (A -> B y B -> C => A -> C)
-- Si ni X -> Y ni Y -> X, entonces X e Y son concurrentes.
+  - Si A y B ocurren dentro de un mismo proceso, y A ocurre antes que B, entonces A $\rightarrow$ B es cierto.
+  - Si A es el evento en el que un proceso **envía un mensaje X**, y B es el evento en el que **otro proceso recibe el mensaje X**, entonces A $\rightarrow$ B es cierto. _Un mensaje no puede recibirse antes de ser enviado_.
+- Happens-before es transitivo (A $\rightarrow$ B y B $\rightarrow$ C $\Longrightarrow$ A $\rightarrow$ C)
+- Si ni X $\rightarrow$ Y ni Y $\rightarrow$ X, entonces X e Y son concurrentes.
 
-![Relojes lógicos](./assets/coordinacion/logic_clocks.png)
+![Relojes lógicos](./assets/coordinacion/lamport_clocks.png)
 - Fíjense en la figura de la derecha que los relojes se **auto-ajustan** porque, por definición de Lamport, es imposible recibir un mensaje antes de que se haya enviado.
 - Por tanto, los relojes le agregan uno al momento en el que salió el mensaje desde el otro proceso.
 
@@ -89,7 +89,7 @@ Los relojes lógicos tienen un problema subyacente:
 - Con los relojes lógicos tenemos mensajes que van y vuelven por el mismo camino, a través del cual puedo rearmar la causalidad. 
 - ¿Qué pasa cuando tengo muchísimas interacciones/eventos? ¿Y si tenemos eventos que existen no sólo por comunicación sino que son generados por el proceso per se?
   - Seguir la causalidad en estos casos es un bodrio, es casi imposible.
-  - ¿La solución? => Un reloj de vectores.
+  - ¿La solución? $\Longrightarrow$ Un reloj de vectores.
   
 Nosotros sabemos cuántos procesos existen, y por cada posición de ese vector que usamos como reloj tenemos un proceso.
 - Cada proceso mantiene un contador de eventos asociados a c/u de los procesos
@@ -137,7 +137,7 @@ Podemos empezar a determinar roles en estos casos, para determinar un esquema de
     - Si gana el mensaje entrante, devuelve un OK. Si no, encola el mensaje
 - Un proceso sólo va a acceder al recurso cuando haya recibido un OK de todos los otros procesos.
 
-¿Cómo se da cuenta si él mismo quiere acceder al recurso? => Se fija en la queue interna si tiene un mensaje suyo.
+¿Cómo se da cuenta si él mismo quiere acceder al recurso? $\Longrightarrow$ Se fija en la queue interna si tiene un mensaje suyo.
 
 ![Solución distribuida](./assets/coordinacion/distributed_solution.png)
 
@@ -199,7 +199,7 @@ Que el sistema esté diseñado como un anillo no implica que la red de elección
 - Los nodos se organizan en una overlay network con forma de anillo.
 - Cuando un nodo detecta que el coordinador no está funcionando, empieza una elección enviando un mensaje ELECTION con su ID al próximo proceso.
 - Cada proceso suma su ID a la lista, y envía el mensaje al próximo proceso
-- finalmente el proceso que originó la elección recibe una lista con su propio ID. De todos los IDs, se selecciona el más grande, y lo comparte con un mensaje COORDINATOR con el próximo elemento, a lo largo de todo el anillo.
+- Finalmente el proceso que originó la elección recibe una lista con su propio ID. De todos los IDs, se selecciona el más grande, y lo comparte con un mensaje COORDINATOR con el próximo elemento, a lo largo de todo el anillo.
 - Si cualquier nodo no responde el mensaje se envía al próximo proceso que esté funcionando del anillo.
 
 Si 2 nodos detectan en simultáneo que se cayó el coordinador y arrancan la elección, el **resultado va a ser el mismo**, solamente va a haber más pasamanos porque van a haber 2 listas circulando.
