@@ -132,4 +132,74 @@ Por último, en cuanto a compatibilidad, MPI no es universal como HTTP. Es un bo
 Esto está explicado muy bien en la teórica, así que veo innecesario hacer los ejercicios.
 
 ## Otros tipos de comunicación
+### Ejercicio 1
 Lista 3 message brokers y sus características principales. ¿Es Apache Kafka un **message broker**?
+
+#### Respuesta
+- **[RabbitMQ](https://www.rabbitmq.com/)**: 
+  - _Message & streaming broker_ Open Source
+  - Soporta diversos protocolos de comunicación (como AMQP y MQTT). También soporta **RPC**.
+  - Provee una gran flexibilidad en cuanto a las operaciones que puede realizar (ruteo, filtrado, streaming, "federation", etc.).
+  - Brinda una alta confiabilidad gracias a la posibilidad de confirmar la entrega de mensajes y de replicarlos a través de un cluster. 
+- **[Redis](https://redis.io/solutions/messaging/)**
+  - Se maneja por el protocolo _Pub/Sub_
+    - Permite mandar mensajes "ligeros", instantáneos y eficientes, óptimos para arquitecturas de baja latencia.
+  - Ofrece **persistencia** para evitar la pérdida de mensajes y _Point-In-Time-Snapshots_
+  - Permite **comunicación en tiempo real**
+- **[Amazon SQS](https://aws.amazon.com/sqs/)**
+  - _Message broker_ que se maneja como una cola de mensajería.
+  - Todo aquel que quiera escuchar lo que se produjo/fue enviado por esa queue debe hacer un `POLL`.
+  - Los productores y consumidores están totalmente desacoplados
+  - Permite escalabilidad horizontal
+  - Los mensajes pueden ser retenidos hasta 14 días
+  - Los mensajes que _fallan al procesarse_ después de varios intentos son enviados a una **Dead-Letter-Queue** (DLQ) para evitar bloquear el workflow principal.
+  - Soporta 2 tipos de queue:
+    - **FIFO** (First In First Out), que ejecuta el `exactly-once-delivery`
+    - **Estándar**, donde los mensajes se procesan en el orden en el que se mandaron y ejecuta el `at-least-once-delivery`
+
+### Ejercicio 2
+Listar tres herramientas que sirven para desarrollar o montar Enterprise Application Integration basadas en mensajes.
+
+#### Respuesta
+- Apache Kafka
+- RabbitMQ
+- Azure Service Bus
+
+### Ejercicio 3
+Dar un ejemplo concreto de herramientas que nos habiliten cada combinación de tipo de comunicación:
+- **Sincrónica y transitoria**
+- **Sincrónica y persistente**
+- **Asincrónica y transitoria**
+- **Asincrónica y persistente**
+
+#### Respuesta
+- **Sincrónica y transitoria**: llamadas telefónicas (?)
+- **Sincrónica y persistente**: RPC + sistemas de mensajería persistentes (RabbitMQ, Apache Kafka, etc.)
+- **Asincrónica y transitoria**: UDP
+- **Asincrónica y persistente**: aplicaciones de mensajería (WhatsApp, Telegram, etc.)
+
+### Ejercicio 4
+Con qué tipo de comunicación diseñaría los siguientes sistemas:
+- Trading financiero
+- Home banking
+- Whatsapp
+- Uber
+Explicar su decisión.
+
+#### Respuesta
+- **Trading financiero**: sincrónico y transitorio
+  - Es necesario que no se reintente porque estamos hablando de un caso que involucra transacciones con dinero.
+  - Justamente como tiene que ser transaccional, tengo que poder hacer todo "del tirón" para evitar problemas de consistencia en los balances de las cuentas
+  - Sería sincrónico por el simple hecho de que tengo que estar esperando la respuesta de si mi transacción fue exitosa o no.
+- **Home banking**: sincrónico y transitorio
+  - Misma justificación que el trading
+- **Whatsapp**: asincrónico y persistente
+  - Lo mencionamos en puntos anteriores, pero mismo se ve en los casos de usos diarios en WhatsApp
+  - Me pueden llegar mensajes en background y yo no me entero hasta que establezco una conexión lo suficientemente estable como para recibirlos
+  - Mismo puedo enviar mensajes que no le terminan de llegar al destinatario/no se terminan de enviar por esas cuestiones de red, pero cuando establezca una conexión estable se procesará dicho envío
+  - Es necesario para poder asegurar esa consistencia que WhatsApp ofrece
+- **Uber**: asincrónico y persistente
+  - Misma justificación que WhatsApp pero trasladado a poder ver la ubicación del Uber una vez reabro la aplicación
+  - Por ahí no quiero estar pendiente constantemente de que el Uber se está moviendo y me quedo haciendo otra cosa con el teléfono (mandarle un mensaje a un amigo, por ejemplo).
+  - La ubicación del Uber se va a seguir actualizando en background/con la aplicación cerrada, y yo me entero recién cuando vuelvo a entrar. Mi pedido no se cancela si la cierro/pongo en 2do plano.
+  - Para esto es necesario que sea un esquema **asincrónico y persistente**.
