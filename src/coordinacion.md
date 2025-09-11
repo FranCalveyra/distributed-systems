@@ -156,7 +156,7 @@ En exclusión mutua, tenemos 2 escenarios:
 ![Token Ring](./assets/token_ring.png)
 - Cuando el anillo se inicializa, a uno de los procesos se le da el token. Si en ese momento quiere usar el recurso puede hacerlo, y cuando termina pasa el token al siguiente del anillo. Está prohibido que use el token inmediatamente después de haberlo usado.
 - Si al recibir el token el proceso no quiere acceder al recurso, simplemente pasa el token
-- **Problema**: Si se pierde el token, cuándo se regenera?
+- **Problema**: Si se pierde el token, ¿cuándo se regenera?
   - Puedo tener también problemas de espera en función del tamaño del anillo.
 - **Beneficio**: evitamos starvation porque el token tiene que pasar de mano y, si uso el mismo token puedo evitar el deadlock.
 
@@ -167,7 +167,7 @@ Los necesitamos para poder entender más adelante cosas que vamos a ver al final
 - Muchos algoritmos distribuidos requieren la existencia de un nodo coordinador. Pero, ¿cómo nos ponemos de acuerdo en quién es el coordinador?
 - Los nodos tienen que tener algún mecanismo para elegir y ponerse de acuerdo en cuál es el coordinador
 - Para poder diferenciar a los nodos es necesario que todos tengan un ID único
-- En general lo que se hace es designar como coordinar al proceso con ID más grande.
+- En general lo que se hace es designar como coordinador al proceso con ID más grande.
 - Además es importante que todos los nodos conozcan al resto de nodos. Lo que pueden no conocer es su estado.
 
 Vamos a usar 2 criterios para elegir un coordinador:
@@ -215,9 +215,9 @@ Este algoritmo falla cuando más de un nodo pide ser coordinador.
 
 ### Sistemas de gran escala - Proof of work
 Hay un líder que le dice al resto "la versión real es esta".
-- **Hashing**: toma un input cualuiera y produce una cantidad fija de bits. Calcular un hash debería ser barato computacionalmente. Pero calcular un input al que le corresponda el mismo hash. Y siempre o casi siempre, sin importar cuán mínima sea la diferencia, si dos inputs son diferentes van a producir hashes diferentes.
+- **Hashing**: toma un input cualquiera y produce una cantidad fija de bits. Calcular un hash debería ser barato computacionalmente. Pero calcular un input al que le corresponda el mismo hash. Y siempre o casi siempre, sin importar cuán mínima sea la diferencia, si dos inputs son diferentes van a producir hashes diferentes.
 - Entonces es muy fácil garantizar que cualquier cambio a la blockchain va a generar un hash necesariamente diferente
-- Esto hace que modificar la blockchain sin que el resto de los validadores se den cuenta es prácticamente.
+- Esto hace que modificar la blockchain sin que el resto de los validadores se den cuenta sea prácticamente imposible.
 - Cada validador produce un hash para el nodo que está procesando, que se llama **digest**.
 - El desafío es calcular el **nonce**: un valor que, cuando se combina con el digest y se hashea, produce un valor con una cierta cantidad de ceros consecutivos al principio del hash final.
 - El validador que lo encuentre primero pasa a ser líder, pero la probabilidad de encontrar un nonce válido es de $\frac{1}{5 \times 10^{17}}$

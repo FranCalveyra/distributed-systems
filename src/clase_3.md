@@ -27,7 +27,7 @@ Para comunicar 2 procesos, es necesaria alguna interfaz que medie entre estos. P
 - El modelo OSI es un marco conceptual que divide la comunicación de redes en 7 capas organizadas de forma jerárquica.
 - Sirve para estandarizar cómo los sistemas se comunican entre sí a través del uso de protocolos
 - Cada capa se encarga de proveer **servicios** específicos a la capa superior.
-- Del lado el emisor cada capa suma su header con su metadata al mensaje original. La versión final es enviada a través de la capa física 
+- Del lado del emisor cada capa suma su header con su metadata al mensaje original. La versión final es enviada a través de la capa física 
 - Del lado del receptor cada capa procesa la parte del header correspondiente, la quita del mensaje y envía el resto a la parte superior 
 - Es importante notar que el modelo OSI es un modelo de referencia y no un conjunto de protocolos concretos
 Decimos que es un modelo porque es una representación de cómo funciona y cómo se envía la información a través de los distintos protocolos de comunicación.
@@ -326,7 +326,7 @@ Consiste en mandarle un mensaje a varios de los oyentes/disponibles, mas no nece
 #### Métricas
 Hay 3 métricas para medir la calidad del árbol: link stress, relative delay penalty (RDP) y tree cost.
 
-- `Link Stress`: cuantas veces un mismo paquete pasa por el mismo link físico
+- `Link Stress`: cuántas veces un mismo paquete pasa por el mismo link físico
 - `RDP`: relación de demora entre seguir el camino de la red de aplicación y seguir el camino de la red física (aplicación/física) para llegar del nodo A al B. En general se promedian todos los RDP y se trata de minimizar ese valor
 - `Tree Cost`: es una métrica asociada al costo total del árbol. Para minimizarlo, es cuestión de encontrar un Minimal Spanning Tree (MST)
 
