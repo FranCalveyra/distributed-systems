@@ -127,7 +127,10 @@ Podemos empezar a determinar roles en estos casos, para determinar un esquema de
 
 **Beneficio**: es simple, fácil de entender, administrar, implementar, es sencillo debuggearlo.
 
-### Solución distribuida - Algoritmo de Ricart?
+### Solución distribuida - Algoritmo de Ricart
+> El algoritmo de Ricart original consiste en que cuando un nodo necesita acceder a un recurso, le pide permiso a todos los nodos del sistema. Si al menos uno le contesta que no, no opera.
+> El que vemos es una optimización sobre Ricart que hace uso de los timestamp.
+
 - Cuando un proceso quiere acceder a un recurso compartido, envía un mensaje con el nombre del recurso, su ID y su timestamp a todos los nodos (incluso a sí mismo).
 - Luego, hay 3 escenarios diferentes para cada nodo:
   - Si no quiere acceder a ese recurso devuelve un OK

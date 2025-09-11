@@ -4,7 +4,7 @@
 Explicar por qué los relojes de distintos procesos se desincronizan en un sistema distribuido.
 
 #### Respuesta
-De por sí, cada máquina tiene su propio reloj de hardware con un cuarzo que oscila a una cierta frecuencia, pero tiene su propio sesgo, lo que implica que, por más que 2 relojes iguales arranquen al mismo tiempo, se van a desfasar eventualmente.
+De por sí, cada máquina tiene su propio reloj de hardware con un cuarzo que oscila a una cierta frecuencia, pero tiene su propio sesgo. Esto implica que, por más que 2 relojes iguales arranquen al mismo tiempo, se van a desfasar eventualmente.
 
 Sumado a eso, al querer sincronizarlos con un protocolo como NTP, tenes latencia para comunicarte con el "servidor central que tiene la hora real", por lo que tenés que calcular un cierto offset y, nuevamente, podés caer en otro desfasaje.
 
@@ -130,8 +130,7 @@ Comparar el algoritmo de elección de coordinador basado en anillos con el algor
 - **Basado en anillos**: un nodo detecta que se cayó el coordinador y inicia una votación, pasando un arreglo con su ID. Pega la vuelta con cada uno appendeando su ID al arreglo y, cuando vuelve a quien arrancó la votación, este comparte un mensaje con el ID del coordinador (el más grande). 
   - **Número de mensajes**: El caso normal implica $2N$ mensajes por cada votación.
     - El peor de los casos, en cambio, es en el cual todos los nodos (salvo el que se cayó, claramente) detectan que se cayó el coordinador. Por ende, se requerirían $2N^2$ mensajes.
-  - **Tolerancia a fallas**: es alta por el hecho de que si se cae un nodo y no le responde, se le envía el mensaje de elección al próximo proceso que esté funcionando dentro del anillo. Si se cae el nodo que había salido ganador en el último mensaje (caso más borde), me voy a quedar en un bucle infinito?
-    - Preguntar en clase
+  - **Tolerancia a fallas**: es alta por el hecho de que si se cae un nodo y no le responde, se le envía el mensaje de elección al próximo proceso que esté funcionando dentro del anillo. Si se cae el nodo que había salido ganador en el último mensaje (caso más borde), **se reinicia la votación**.
 - **Bully**: le pregunto siempre a los nodos más grandes. Si no me responden gano la elección.
   - **Número de mensajes**: suponiendo el peor caso en el que tengo N nodos (del 0 a $N-1$) y la votación arranca desde 0, voy a tener:
     - 0 le manda a $1,2,3,...,N-1$ y todos le responden, implicando $2(N-1)$ mensajes
