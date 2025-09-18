@@ -9,6 +9,7 @@
 - [Comunicación](./clase_3.md)
 - [Coordinación](./coordinacion.md)
 - [Naming](./naming.md)
+- [Consistencia y Replicación](./replicacion.md)
 
 # Práctica
 - [Guía Introductoria](./Práctica/guia_intro.md)
