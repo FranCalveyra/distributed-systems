@@ -234,3 +234,18 @@ Todo tiene que ver con el diseño de la arquitectura de datos.
 - Los problemas surgen cuando en un período corto se accede a réplicas diferentes.
 
 [Insertar foto de bases de datos replicadas distribuidas con las que se contactan las laptops]
+
+## Blockchain
+Siempre que se desarrolle en blockchain se desarrollan 2 apps:
+- Un front que se conecta con el backend usando una librería llamada `web3`
+- Un backend que escribe en la cadena de blockchain
+
+El backend queda guardado en la blockchain puntual.
+
+La blockchain se usa para la tenencia de activos, que pueden ser criptoactivos o cualquier cosa que yo pueda tokenizar como los NFT.
+
+### Ethereum
+Se programa en `Solidity`.\
+Introduce el concepto de `Smart Contract`, el cual es un programa que corre dentro de la blockchain, sobre el que se define una serie de condiciones,
+
+Puede ser invocado por prácticamente cualquier billetera que consuma este programa, y está distribuido por toda la blockchain.
