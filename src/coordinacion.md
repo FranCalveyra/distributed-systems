@@ -64,7 +64,7 @@ El Unix TimeStamp tiene el 0 (el primero de todos) en el 01/01/1970
 ![NTP](./assets/coordinacion/ntp.png)
 
 ## Relojes lógicos
-- Si no nos interesa llevar un registro con exactitud, una solución como NTP es necesaria.
+- Si nos interesa llevar un registro con exactitud, una solución como NTP es necesaria.
 - Si todos estamos de acuerdo que A pasa antes que B, y B pasa antes que C, ya nos ponemos de acuerdo con cómo fueron las cosas, entonces no hay duda entre los procesos de cuál es el orden correcto
 - Nos desacoplamos del tiempo, y nos fijamos específicamente en los eventos y su orden.
   - Me importa lo que pasó y en qué orden, no cuándo pasó.
