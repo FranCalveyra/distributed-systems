@@ -18,3 +18,6 @@
 
 # Trabajos Prácticos
 - [TP 1](./tps/tp_1.md)
+
+# Exámenes viejos
+- [Parcial 1 2024](./Práctica/parciales_viejos/Parcial_Sistemas_Distribuidos_2024.md)
