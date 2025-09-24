@@ -23,7 +23,7 @@ Desarrollar un párrafo corto sobre cada uno de los temas y comparar o establece
 relación con RPC. Considerar qué aspectos comparten y cómo se diferencian
 
 #### Respuesta
-- **HTTP**: protocolo de comunicación que opera a nivel capa de aplicación, usado para transferir documentos de "hypermedia" como páginas web entre un cliente (generalmente un browser) y un servidor. El modelo de comunicación que sigue es el de REQ/REP, visto en la clase de [Comunicación](../clase_3.md)
+- **HTTP**: protocolo de comunicación que opera a nivel capa de transporte, usado para transferir documentos de "hypermedia" como páginas web entre un cliente (generalmente un browser) y un servidor. El modelo de comunicación que sigue es el de REQ/REP, visto en la clase de [Comunicación](../clase_3.md)
 - **gRPC**: framework open-source para implementar RPC (Remote Procedure Call) sobre cualquier aplicación. Usa HTTP por debajo, más concretamente HTTP/2. Las APIs REST usan HTTP/1.1
 - **REST** (Representational State Transfer): estilo de arquitectura para web apps que sigue el modelo cliente-servidor, cuya interfaz es uniforme al hacer uso de HTTP como protocolo de comunicación (basada en métodos HTTP como GET, PUT, POST, DELETE).
 - **GraphQL**: estilo de arquitectura orientado a queries hacia APIs, que también opera sobre HTTP. La diferencia principal respecto a REST es que obtiene exactamente la data que pide. 
@@ -46,7 +46,7 @@ relación con RPC. Considerar qué aspectos comparten y cómo se diferencian
   - obtengo sólo eso, se ignora por completo el DNI.
 
 Relaciones con RPC:
-- **HTTP**: RPC opera generalmente sobre HTTP para hacer los Call-To-Action.
+- **HTTP**: RPC opera generalmente sobre HTTP para hacer los llamados a procedimientos.
 - **gRPC**: gRPC es un framework que permite implementar RPC sobre diversos lenguajes
 - **REST**: tanto las APIs REST como RPC usan HTTP por abajo. Mientras que uno es un modelo de llamados remotos a operaciones y otro es un estilo de arquitectura, ambos se sirven de la misma herramienta para lograr su objetivo.
 - **GraphQL**: la forma de operar entre ambos es parecida, en RPC el cliente decide a qué procedimiento llamar específicamente, mientras que en GraphQL el cliente decide qué datos específicos quiere traerse.
