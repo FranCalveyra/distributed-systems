@@ -162,6 +162,9 @@ Responder y justificar:
 1. ¿A y B son concurrentes, o uno precede al otro?
    1. A y B son **concurrentes**, porque $A_0 > B_0 \wedge B_1 > A_1$. No hay forma de determinar si uno ocurrió antes que el otro, por lo que decimos que son concurrentes.
 2. ¿Cuál es la relación entre C y A?
-   1. A **_puede ser precedente de_** C, puesto que $A_0 = C_0 \wedge A_1 < C_1 \wedge A_2 < C_2$
+   1. A **es precedente de** C y **_también puede ser causa_**, puesto que $A_0 = C_0 \wedge A_1 < C_1 \wedge A_2 < C_2$
 3. ¿Cuál es la relación entre C y B?
-   1. B **_puede ser precedente de_** C, puesto que $B_0 < C_0 \wedge B_1 = C_1 \wedge B_2 < C_2$
+   1. B **es precedente de** C y **_también puede ser causa_**, puesto que $B_0 < C_0 \wedge B_1 = C_1 \wedge B_2 < C_2$
+
+> Si un evento A precede a otro evento B, decimos que **puede ser causa**, pero no asegurarlo porque no tenemos ninguna garantía de ello.\
+> Que sea precedente quiere decir que pasa antes, nada más.
