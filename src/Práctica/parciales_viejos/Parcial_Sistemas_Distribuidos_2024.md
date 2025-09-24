@@ -291,7 +291,7 @@
     - [ ] a.  Son estructurados en forma de hipercubos o mallas
     - [ ] b.  El nivel de latencia es alto, el nivel de confiabilidad y seguridad es bajo
     - [ ] c.  Son estructurados en forma de anillo
-    - [ ] d.  Ninguna de las anteriores
+    - [x] d.  Ninguna de las anteriores
 
     **Justificación:** La respuesta "b" no está comparando con nada, por lo que no se puede afirmar esto
 
