@@ -184,14 +184,15 @@ Con qué tipo de comunicación diseñaría los siguientes sistemas:
 - Home banking
 - Whatsapp
 - Uber
+
 Explicar su decisión.
 
 #### Respuesta
-- **Trading financiero**: sincrónico y transitorio
-  - Es necesario que no se reintente porque estamos hablando de un caso que involucra transacciones con dinero.
+- **Trading financiero**: sincrónico y persistente
+  - Es necesario que se reintente de manera idempotente (con IDs únicos para evitar operaciones duplicadas) porque estamos hablando de un caso que involucra transacciones con dinero.
   - Justamente como tiene que ser transaccional, tengo que poder hacer todo "del tirón" para evitar problemas de consistencia en los balances de las cuentas
   - Sería sincrónico por el simple hecho de que tengo que estar esperando la respuesta de si mi transacción fue exitosa o no.
-- **Home banking**: sincrónico y transitorio
+- **Home banking**: sincrónico y persistente
   - Misma justificación que el trading
 - **Whatsapp**: asincrónico y persistente
   - Lo mencionamos en puntos anteriores, pero mismo se ve en los casos de usos diarios en WhatsApp
