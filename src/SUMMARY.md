@@ -15,6 +15,7 @@
 - [Guía Introductoria](./Práctica/guia_intro.md)
 - [Guía Comunicación](./Práctica/guia_comunicacion.md)
 - [Guía Coordinación](./Práctica/guia_coordinacion.md)
+- [Guía Naming](./Práctica/guia_naming.md)
 
 # Trabajos Prácticos
 - [TP 1](./tps/tp_1.md)
