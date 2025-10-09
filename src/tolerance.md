@@ -1,5 +1,3 @@
-Banching the unbanch of (09/10)
-
 Se espera que el sistema tenga fallas: es inevitable. Lo que se busca es que sea tolerable a las mismas.
 
 # Confiabilidad y sus requerimientos
