@@ -10,6 +10,8 @@
 - [Coordinación](./coordinacion.md)
 - [Naming](./naming.md)
 - [Consistencia y Replicación](./replicacion.md)
+- [Tolerancia](./tolerancia.md)
+- [Seguridad](./seguridad.md)
 
 # Práctica
 - [Guía Introductoria](./Práctica/guia_intro.md)
