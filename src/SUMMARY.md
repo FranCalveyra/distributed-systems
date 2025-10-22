@@ -20,6 +20,7 @@
 - [Guía Naming](./Práctica/guia_naming.md)
 - [Guía Consistencia y Replicación](./Práctica/guia_consistencia_replicacion.md)
 - [Guía Tolerancia](./Práctica/guia_tolerancia.md)
+- [Guía Seguridad](./Práctica/guia_seguridad.md)
 
 # Trabajos Prácticos
 - [TP 1](./tps/tp_1.md)
