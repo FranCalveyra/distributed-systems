@@ -10,30 +10,31 @@ El problema principal es que las réplicas **sean consistentes entre si**.
 
 ### Razones para replicar
 1. Los datos se replican para aumentar la confiabilidad del sistema
-   - Se puede repliacr un sistema de archivos; cuando el principal se cae, el sistema puede seguir funcionando
+   - Se puede replicar un sistema de archivos; cuando el principal se cae, el sistema puede seguir funcionando
 2. La otra razón es por mejorar la performance del sistema
-   - Un S.D puede necesitar escalar en términos del tamano o del área geográfica que cubre
+   - Un S.D puede necesitar escalar en términos del tamaño o del área geográfica que cubre
    - **Ej de Tamaño**: cada vez más procesos requieren acceder a los datos compartidos
      - En ese caso, puedo replicar para distribuir la carga del "sistema central"
 ### Desventajas
-- Tener multiples copias puede generar _problemas de consistencia_
+- Tener múltiples copias puede generar _problemas de consistencia_
 - Cada vez que se modifica una copia, esa copia se vuelve distinta del resto
 - Es necesario realizar cambios en todas las copias para garantizar la consistencia
 - Exactamente cuándo y cómo deben realizarse esos cambios determina el costo de replicación
-  - Cuanto mas performante tiene que ser el proceso de replicacion, mayor es el costo
+  - Cuanto más performante tiene que ser el proceso de replicación, mayor es el costo
 
-### Replicacion como tecnica de escalabilidad
-- Replicacion y cacheo se usan ampliamente como tecnicas de escalabilidad por cuestiones del aumento de rendimiento que implican
+### Replicación como técnica de escalabilidad
+- Replicación y cacheo se usan ampliamente como técnicas de escalabilidad por cuestiones del aumento de rendimiento que implican
   - Ej: se puede configurar el TTL (Time To Live) de la copia en caché a partir de los headers de `HTTP` 
 - Las restricciones de escalabilidad generalmetne aparecen en forma de problemas de rendimiento
 - Colocar copias de datos cerca de los procesos que los usan puede mejorar el rendimiento mediante la reducción del tiempo de acceso. Y entonces se resuelven problemas de escalabilidad.
 - Para mantener la copia actualizada, voy a requerir un mayor ancho de banda de la red. Claramente incurre un costo
 - Mantener varias copias consistentes puede estar sujeto a problemas de escalabilidad serios
-- Una colección de copias es consistente cuando varias copias terminan siendo las mismas? [completar]
+- Una colección de copias es consistente cuando varias copias terminan siendo las mismas
+- Una operación de lectura realizada a cualquier copia siempre devolverá el mismo resultado
 
-- Cuando se realiza una actualizacion, se tiene que propagar a todas las copias previo a realizar una operación posterior
-- Esto debe ser independientemente de en que2 copia se inicie o realice la operación
-- Este tipo de consistencia se denomina (informalmente) como consistencia hermética. En el caso de replicación sincrónica.
+- Cuando se realiza una actualización, se tiene que propagar a todas las copias previo a realizar una operación posterior
+- Esto debe ser independientemente de en qué copia se inicie o realice la operación
+- Este tipo de consistencia se denomina (informalmente) como **consistencia hermética**. En el caso de replicación sincrónica.
 
 > **Triggers de Bases de Datos**: son operaciones que se ejecutan cuando sucede un evento en particular. Ej: si escriben a la tabla `users`, hago una copia de todas las tablas previo a modificarla.
 
@@ -43,9 +44,12 @@ El problema principal es que las réplicas **sean consistentes entre si**.
 
 ## Modelos de consistencia centrados en los datos
 ### Conceptos
-[Completar]
+- **Almacén de datos (data store)**: el objeto que conforma los datos, que pueden estar compartidos.
+  - El almacén de datos puede estar físicamente distribuido a través de múltiples máquinas.
+  - Se asume que todo proceso que puede acceder a datos del almacén tiene una copia local (o en las cercanías)
+  - Las operaciones de escritura se propagan hacia las otras copias
 
-[Insertar foto de las réplicas distribuidas]
+![Distributed Data Store](./assets/replicacion/distributed_data_store.png)
 
 - Un **modelo de consistencia** es esencialmente un contrato entre los procesos y el almacén de datos (_data store_)
 - Si los procesos aceptan obedecer ciertas reglas, el almacén promete funcionar correctamente
@@ -127,7 +131,7 @@ $W_i(x)a; R_i(x)b$
 - $a y b$ representan los valores
 
 El eje horizontal representa el tiempo:
-[Insertar foto]
+![Gráfico de consistencia secuencial](./assets/replicacion/sequential_consistency.png)
 
 - Cuando el proceso 2 lee `NIL` quiere decir que todavía no se actualizó el dato
 - Entre $R_1$ y $R_2$ hubo alguna actualización que hizo que efectivamente se leyera el dato que escribió el proceso 1.
@@ -150,15 +154,18 @@ Si se produce otra secuencia $S_2$ (con transacciones ${t_1', t_2', t_3'}$) al m
 - Pero todos los procesos ven la misma interpolación de operaciones
 - No hay referencias temporales, respecto de la operación de escritura "más reciente".
 
-[Insertar foto del data store consistente y el otro inconsistente con procesos P1, P2, P3 y P4]
-- El modelo B es inconsistente porque la secuencia de los eventos es necesariamente inconsistente.
-  - El orden de los eventos es inconsistente necesariamente. Se escriba A, se escribe B, pero el orden de lectura no se condice de ninguna manera.
+![Data Store Inconsistente](./assets/replicacion/inconsistent_data_store.png)
+- El modelo B es inconsistente porque la secuencia de los eventos es _necesariamente inconsistente_.
+  - El orden de los eventos es inconsistente **necesariamente**. Se escribe A, se escribe B, pero el orden de lectura no se condice de ninguna manera.
 
-[Insertar foto de los 3 procesos]
+| Proceso 1         | Proceso 2         | Proceso 3         |
+| ----------------- | ----------------- | ----------------- |
+| x $\leftarrow$ 1; | y $\leftarrow$ 1; | z $\leftarrow$ 1; |
+| impresión (y, z); | impresión (x, z); | impresión (x, y); |
 - Terminas teniendo 720 ($6!$) secuencias de ejecución posibles
 - No todas las posibilidades son secuencialmente consistentes. A efectos de este ejemplo, solo hay 90 combinaciones válidas.
 
-[Insertar foto de las 4 ejecuciones]
+![Diferentes Ordenamientos de Ejecuciones](./assets/replicacion/different_orderings.png)
 - En todos los resultados menos en uno (el de `Execution 3`) los prints son consistentes con la firma
   - Aún así sigue siendo **secuencialmente consistente**
 - La firma es la concatenación de todas las salidas. Es el orden en el que se deberían ejecutar los procesos.
@@ -176,28 +183,37 @@ Un evento es consecuencia de otro. No me interesan ciertas secuencias por su fal
 - Si 2 procesos escriben espontánea y simultáneamente 2 diferentes elementos de datos, no están causalmente relacionados. Son **operaciones concurrentes**.
 
 Para que un data store se considere causalmente consistente, es necesario que respete la siguiente condición:
-_"Escrituras que potencialmente están relacionadas por la causalidad, deben ser vistas por todos los procesos en el mismo orden. Las escrituras concurrentes ..."_ [completar]
+_"Escrituras que potencialmente están relacionadas por la causalidad, deben ser vistas por todos los procesos en el mismo orden. Las escrituras concurrentes pueden verse en un orden diferente en diferentes máquinas."_
 
 
-[Insertar foto de los 4 procesos que leen y escriben]
-Si los eventos...
+![Consistencia causal](./assets/replicacion/causal_consistency.png)
+Si los eventos son concurrentes, esta secuencia está permitida con un almacén **causalmente consistente**, pero no con un almacén _secuencialmente_ consistente.
 
-[Insertar foto de los 2 modelos, uno causalmente consistente y otro inconsistente]
-- a) es el data store consistente
-- b) es el inconsistente
+![Data Store Causalmente Consistente](./assets/replicacion/causally_consistent_datastore.png)
+- a) es el data store **causalmente** inconsistente
+- b) es el **causalmente** consistente
 
 
-Implementar la consistencia causal requiere dar seguimiento a cuáles procesos han visto cuáles escrituras
+Implementar la consistencia causal requiere dar seguimiento a cuáles procesos han visto cuáles escrituras\
 Esto significa que debe construirse y mantenerse una gráfica de la dependencia de cuál operación depende de qué otras operaciones. Se termina construyendo un árbol de secuencia de lecturas y escrituras
 
 #### Operaciones de agrupamiento
 - La consistencia secuencial y la causal están definidas a nivel de operaciones de escritura y lectura
 - Estos modelos se desarrollaron inicialmente para sistemas multiprocesador de memoria compartida
-- La granularidad fina de estos modelos de consistencia no coincide...
 - La concurrencia entre programas que comparten datos generalmente se mantiene bajo control a través de mecanismos de sincronización para **exclusión mutua y transacciones**.
 - A nivel de programa, las operaciones de escritura y lectura se colocan entre "corchetes" (en este caso son operaciones) mediante el par de operaciones `ENTER_CS` y `LEAVE_CS`.
 - `CS` = Critical Section; sección crítica
-- [Completar con lo de variables de sincronización]
+- Los datos manejados mediante una serie de operaciones de lectura y escritura están protegidos contra accesos concurrentes.
+- Lo que está delimitado por `ENTER_CS` y `LEAVE_CS` convierten la serie de operaciones de lectura y escritura en una unidad ejecutada atómicamente
+- De esta manera aumentan el nivel de granularidad
+- Los datos manejados mediante una serie de operaciones de lectura y escritura están protegidos contra accesos concurrentes. “Unidad Atómica”
+- Se usan variables de sincronización compartidas.
+- Cuando un proceso entra en su sección crítica, debe **adquirir** las variables importantes de sincronización
+- De igual manera, debe liberar esas variables al abandonarla
+- Cada variable de sincronización tiene un propietario en un momento dado, siendo este el último proceso que la adquirió
+
+![Operaciones de agrupamiento](./assets/replicacion/grouping_operations.png)
+- Una secuencia de eventos válida para la consistencia de entrada.
 
 ## Modelos de consistencia centrados en el cliente
 ### Conceptos
@@ -214,26 +230,45 @@ Si uno ve una cosa y otro ve otra, mientras que sea consistente con lo que se le
 - La mayoria de las operaciones involucran la lectura de datos.
 - Estos data stores ofrecen un modelo de consistencia muy débil, llamada **consistencia momentánea**.
   - Se mantiene una consistencia local
-- [Completar]
+- Al introducir modelos de consistencia centrada en el cliente, es posible ocultar muchas inconsistencias de una manera relativamente barata
 
 ### Consistencia momentánea
-- Hasta qué punto los procesos operan de manera concurrente
-- hasta qué punto necesito garantizar la consistencia
+- ¿Hasta qué punto los procesos operan de manera concurrente?
+- ¿Hasta qué punto necesito garantizar la consistencia?
 
 Para ambos casos puede variar...
-Ej: ... [Completar]
+Ej: en muchos sistemas de BD, la mayoría de los procesos difîcilmente realizan alguna vez operaciones de actualización, sino que mayoritariamente leen datos. Entonces:
+$\text{¿Qué tan rápido deben estar disponibles las actualizaciones para los procesos de sólo lectura?}$
 
 Todo tiene que ver con el diseño de la arquitectura de datos.
 - Las BD replicadas y distribuidas (de gran escala) suelen tolerar un grado de inconsistencia relativamente alto
 - Si no ocurren actualizaciones durante mucho tiempo, todas las réplicas gradualmente se volverán inconsistentes
 - Esta forma de consistencia se conoce como **consistencia momentánea**.
 - En ausencia de updates, todas las réplicas convergen en copias idénticas unas de otras
-- Los updates se propagan en todas las réplicas 
-- [completar]
+- Solo requieren la garantía de que los updates se propaguen en todas las réplicas 
+- Los conflictos de escritura-escritura con frecuencia son fáciles de resolver cuando se asume que sólo un pequeño grupo de procesos puede realizar actualizaciones.
+- Por ende, la implementación de este tipo de consistencia es **barata**
 - Los data stores funcionan bien siempre y cuando los clientes siempre accedan a la misma réplica
 - Los problemas surgen cuando en un período corto se accede a réplicas diferentes.
 
-[Insertar foto de bases de datos replicadas distribuidas con las que se contactan las laptops]
+![Consistencia Momentánea](./assets/replicacion/momentaneous_consistency.png)
+- Los problemas subyacentes a este tipo de consistencia pueden mitigarse introduciendo la consistencia centrada en el cliente
+  - En esencia, esta última proporciona garantías para un solo cliente, para el almacén de datos de ese cliente en particular
+  - No se proporciona garantía alguna con respecto a accesos concurrentes de distintos clientes
+
+#### Lecturas monotónicas
+- El primer modelo de consistencia centrada en el cliente es el de lecturas monotónicas.
+- Un almacén de datos proporciona consistencia de lectura monotónica si se cumple la siguiente condición:
+  > “Si un proceso lee el valor de un elemento de datos x, cualquier operación de lectura sucesiva sobre x que haga ese proceso devolverá siempre el mismo valor o un valor más reciente.”
+
+O sea, si un proceso ha visto un valor de $x$ al tiempo $t$, nunca verá una versión más vieja de $x$ en un tiempo posterior ($\forall t_i > t$). 
+
+#### Escrituras monotónicas
+- En muchas situaciones, es importante que las operaciones de escritura se propaguen en el orden correcto hacia todas las copias del almacén de datos, esto es _escritura monotónica_.
+- Un almacén de datos **proporciona consistencia de escritura monotónica** si se cumple la siguiente condición: 
+  > “Una operación de escritura hecha por un proceso sobre un elemento x se completa antes que cualquier otra operación sucesiva de escritura sobre x realizada por el mismo proceso.”
+
+O sea, una operación de escritura sobre una copia del elemento $x$ se realiza **sólo** si esa copia se ha actualizado mediante **cualquier operación de escritura previa**, la cual pudo haber ocurrido en otras copias de $x$
 
 ## Blockchain
 Siempre que se desarrolle en blockchain se desarrollan 2 apps:
