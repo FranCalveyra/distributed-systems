@@ -39,7 +39,7 @@ Para los fines de esta materia se considerarán 3 tipos de sistemas distribuidos
 
 En un sistema distribuido, un ejemplo típico de un punto de acceso es un host que ejecuta un servidor específico, con su dirección formada por la combinación de, por ejemplo, una dirección IP y un número de puerto.
 
-![Acceso compartido a disco](./assets/naming/server.png)
+![Acceso compartido a disco](./assets/naming/servers.png)
 
 - Del mismo modo, si una entidad ofrece más de un punto de acceso, no queda claro qué dirección usar como referencia.
 ![Gateway](./assets/naming/gateway.png)
@@ -217,6 +217,7 @@ Se pueden representar como un grafo dirigido y etiquetado con dos tipos de nodos
 - El proceso de buscar un nombre se llama **resolución de nombres**.
 
 Se reduce a "_En base a un nombre, dame una IP_".
+
 **Mecanismo de clausura**
 - Sólo puede tener lugar si sabemos cómo y dónde empezar
 - Saber cómo y dónde comenzar la resolución de nombres generalmente se conoce como **mecanismo de clausura**.

@@ -3,15 +3,36 @@
 Escribir un ejemplo en donde la dirección de una entidad E necesita resolverse dentro de
 otra dirección para acceder en realidad a E.
 
+### Respuesta
+
+Un ejemplo clásico es el acceso a una página web a través de un nombre de dominio, como `www.ejemplo.com`. El nombre de dominio se resuelve primero en una dirección IP mediante el sistema DNS (Domain Name System). Sin embargo, para realmente entregar la información al usuario, esa dirección IP muchas veces corresponde a un servidor de balanceo de carga (load balancer). El load balancer recibe la solicitud y la redirige internamente a la dirección de uno de los servidores reales donde efectivamente está alojado el recurso E que queremos acceder. Es decir, la resolución del nombre pasa por varias etapas de direcciones hasta llegar a la entidad final.
+
+Otro ejemplo similar es el acceso a un servicio con alta disponibilidad en una red empresarial, donde el acceso se realiza mediante una IP virtual (VIP). Cuando un cliente accede a esa VIP, la dirección se resuelve dinámicamente (por ARP o mediante un software de clustering) al nodo físico que actualmente está activo y puede ofrecer el servicio, ocultando así las direcciones reales de los nodos detrás de una dirección virtual.
+
 ### Ejercicio 2
-En general, ¿cuál es la diferencia en la manera en que se implementan los nombres en
-sistemas distribuidos y no distribuidos?
+En general, ¿cuál es la diferencia en la manera en que se implementan los nombres en sistemas distribuidos y no distribuidos?
+
+### Respuesta
+Los sistemas distribuidos resuelven los nombres de manera distribuida (valga la redundancia) en múltiples máquinas, mientras que en los no distribuidos los nombres está centralizados en un nodo.
 
 ### Ejercicio 3
 Si no se cuenta con un sistema de nombres, ¿qué ocurre si una entidad ofrece más de un punto de acceso?
 
+### Respuesta
+El sistema no sabe qué dirección usar como referencia
+
 ### Ejercicio 4
 ¿En qué se diferencian el sistema de direccionamiento plano (Flat Naming System) y el sistema de direccionamiento estructurado (Structured Naming System)?
+
+### Respuesta
+Difieren en los siguientes puntos:
+| Característica    | Flat Naming   | Structured Naming                 |
+| ----------------- | ------------- | --------------------------------- |
+| **Estructura**    | Plano         | Jerárquico                        |
+| **Escalabilidad** | Local         | Global                            |
+| **Legibilidad**   | Para máquinas | Para humanos                      |
+| **Resolución**    | Broadcasting  | Consultas distribuidas            |
+| **Uso**           | Redes P2P     | Internet / Redes organizacionales |
 
 ### Ejercicio 5
 En la solución de difusión por broadcast para Flat Naming System:
@@ -20,11 +41,29 @@ a. ¿En qué capa del Modelo de referencia OSI operaría?
 b. ¿Qué limitaciones tiene?
 c. ¿Cuál es el protocolo más comúnmente utilizado para la difusión por Broadcast en Flat Naming System?
 
+### Respuesta
+a. Opera en la capa de enlace, puesto que usa direcciones MAC.
+
+b.
+- **Limitado a redes locales**: No puede escalar más allá de las redes de área local (LAN)
+- **No atraviesa routers**: Los routers no reenvían broadcasts, por lo que queda confinado a un segmento de red
+- **Requiere que todos los procesos escuchen**: Todos los dispositivos en la red deben estar escuchando las solicitudes de ubicación entrantes
+- **Tráfico de red excesivo**: Genera mucho tráfico de red al difundir a todos los dispositivos
+- **Escalabilidad limitada**: No es viable para redes grandes o distribuidas geográficamente
+
+c.**ARP (Address Resolution Protocol)**
+
 ### Ejercicio 6
-De acuerdo al protocolo, ¿Como se sabe que dirección MAC está asociada con una dirección IP?
+De acuerdo al protocolo, ¿Cómo se sabe que dirección MAC está asociada con una dirección IP?
+
+### Respuesta
+Porque le pregunta uno por uno a cada dispositivo de la red.
 
 ### Ejercicio 7
 De acuerdo al sistema de nombres estructurado, ¿Cómo se denomina el mecanismo para saber cómo y dónde comenzar la resolución de nombres?
+
+### Respuesta
+Se llama **_Mecanismo de clasura_**.
 
 ### Ejercicio 8
 Realizar, en grupo, el laboratorio guiado de ARP con Packet Tracer hasta la parte 2, paso 1.
