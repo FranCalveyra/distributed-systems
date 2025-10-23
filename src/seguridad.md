@@ -94,8 +94,6 @@ _Computacionalmente inviable_ refiere únicamente a la actualidad; se puede dar 
 - Dificultad de minado en algoritmos PoW
   - `PoW = Proof of Work`
 
-El chiste del hashing es que te permite identificar fácilmente si un dato/archivo fue modificado.
-
 ### Firma digital
 Es ponerle una marca a un dato con una cierta clave. Es lo que se usa en criptografía asimétrica
 

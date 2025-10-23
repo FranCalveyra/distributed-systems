@@ -316,26 +316,26 @@ Se realiza una conexión point to point para cada proceso. Puede parecer una sol
 
 ### Orden en los mensajes
 
-* Un mensaje enviado a nu grupo debe ser entregado a cada miembro no defectuoso de ese grupo, o a ninguno de ellos si el remitente falla durante la transmisión. Eso se llama: **sincronía virtual**, establece "todo o nada".
+* Un mensaje enviado a un grupo debe ser entregado a cada miembro no defectuoso de ese grupo, o a ninguno de ellos si el remitente falla durante la transmisión. Eso se llama: **sincronía virtual**, establece "todo o nada".
 * Pero no asegura el orden de entrega entre mensajes. Para ello se distinguen cuatro tipos principales de ordenamiento
 	1. Multicasts no ordenados (Unordered multicasts)
+      	1. También llamados "_multicasts confiables_"
 	2. Multicasts ordenados FIFO
-	3. Multicasts ordenados causalmente (Casually ordered)
+	3. Multicasts ordenados causalmente (Causally ordered)
 	4. Entrega totalmente ordenada (Totally ordered): todos los mensajes son entregados en orden a todos los miembros del grupo, independientemente del origen o de su causalidad.
 
 La sincronía virtual que ofrece una entrega totalmente ordenada se llama **Atomic Multicast**.
 
 6 formas diferentes de comunicación de grupo (multicast) confiable o sincronía virtual
 
-| Multicast     | ordenamiento | Entrega totalmente ordenada |
-| ------------- | ------------ | --------------------------- |
-| Confiable     | No           | No                          |
-| FIFO          | FIFO         | No                          |
-| Causal        | Causal       | No                          |
-| Atomic        | No           | Sí                          |
-| FIFO Atomic   | FIFO         | Sí                          |
-| Causal Atomic | Causal       | Sí                          |
-
+| Multicast               | Ordenamiento | Entrega totalmente ordenada |
+| ----------------------- | ------------ | --------------------------- |
+| Confiable (desordenado) | No           | No                          |
+| FIFO                    | FIFO         | No                          |
+| Causal                  | Causal       | No                          |
+| Atomic                  | No           | Sí                          |
+| FIFO Atomic             | FIFO         | Sí                          |
+| Causal Atomic           | Causal       | Sí                          |
 
 ## Transacciones en servicios
 
