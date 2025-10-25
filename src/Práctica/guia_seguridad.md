@@ -15,11 +15,17 @@ g. No revelar información sensible antes de la autenticación de las partes.
 
 ### Respuesta
 **a. Garantizar la integridad del mensaje**: comparar hashes
+
 **b. Autenticación mutua**: challenge-response, KDC, criptografía de clave pública
+
 **c. Suplantación de identidad**: MFA/2FA; tenés que tener alguna manera de asegurarle al sistema que sos vos.
+
 **d. Ataques de replicación**: números de secuencia/nonce. Evito que el mensaje se pueda volver a enviar, o le doy una validez al mensaje. También se pueden usar claves de sesión, porque duran un tiempo limitado.
+
 **e. Gestionar eficientemente las claves secretas compartidas en sistemas grandes**: KDC
+
 **f. Autenticidad de las claves públicas**: se utiliza una infraestructura de clave pública (PKI) donde las claves públicas son firmadas por una autoridad certificadora (CA) confiable mediante certificados digitales. Así, los usuarios pueden verificar que una clave pública realmente pertenece a quien dice ser su dueño.
+
 **g. No revelar información sensible antes de la autenticación de las partes**: autenticar primero, o también usar criptografía de clave pública.
 - En esta última no te tenés que asegurar de que estas hablando con X, sino que directamente cifrás con su clave pública; lo va a poder descifrar esa persona y nadie más.
   - Es débil ante ataques de suplantación de identidad
