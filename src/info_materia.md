@@ -48,7 +48,7 @@ Justamente, en un sistema distribuido es mucho más complejo porque tiene muchos
 - Se pierden los bits
 - Pueden venir intrusos
   - Atacantes, por ejemplo
-- Obvio... hay bugs en el código
+- Obvio, hay bugs en el código
 Entre otras cosas...
 
 Si no se controlan estas cosas: ¿La gente podría confiar en el sistema?

@@ -227,7 +227,7 @@ La falencia de este protocolo es que por ahí la clave pública que tiene Alice 
 - **MAC - Mandatory AC**: la administracion central define políticas de acceso (ej: niveles de secreto, desde público a top secret)
 - **DAC - Discretionary AC**: el propietario de un objeto decide quién tiene acceso (ej: permisos de archivos Unix, archivos de Google Drive)
 - **RBAC - Role Based**: la autorización se basa en el rol del usuario en la organización (ej: profesor, estudiante)
-- **ABAC - Attribute Based**: control de acceso más granular, basado en atributos de usuarios, objetos, entorno, conexión y administrativos (ej: Si tenes un DNI muy viejo/nuevo no podés hacer tal cosa)
+- **ABAC - Attribute Based**: control de acceso más granular, basado en atributos de usuarios, objetos, entorno, conexión y administrativos (ej: Si tenés un DNI muy viejo/nuevo no podés hacer tal cosa)
 
 ### Delegación
 - ¿Cómo delegar derechos de acceso sin compartir las credenciales principales?

@@ -22,7 +22,7 @@ c) **Low Reliability and High Availability**: como protocolo, UDP en sí mismo r
 > - Disponibilidad: Cuánto tiempo digo que voy a estar disponible
 > - Fiabilidad (reliability): Qué porcentaje del tiempo que digo que voy a estar disponible realmente estoy disponible
 
-d) **Low Reliability and Low Availability**: el TP1, corre en nuestra máquina, anda a saber que pasa si hay un fallo, etc.
+d) **Low Reliability and Low Availability**: el TP1, corre en nuestra máquina, andá a saber qué pasa si hay un fallo, etc.
 
 
 ### Ejercicio 2
@@ -34,15 +34,102 @@ Durante el último Cyber Monday, el sistema de venta de merchandising de la Univ
 | 10:30 am   | 11:30 am          | 1 hora              |
 | 16:15 pm   | 16:30 pm          | 15 min              |
 
+
+### Respuesta
+
+**Datos del problema:**
+- 3 fallos durante el Cyber Monday
+- Tiempos de indisponibilidad: 30 min, 60 min, 15 min
+
+**Cálculos:**
+
+**1. MTTR (Mean Time To Repair) - Tiempo promedio de reparación:**
+$$
+MTTR = (30 + 60 + 15) / 3 = 105 / 3 = 35 \text{ minutos}
+$$
+
+**2. MTTF (Mean Time To Failure) - Tiempo promedio entre fallos:**
+
+Para calcular MTTF, necesitamos el tiempo total de operación y el número de fallos.
+
+Asumiendo que el sistema operó desde las 00:00 hasta las 24:00 (24 horas = 1440 minutos):
+- Tiempo total de indisponibilidad = 30 + 60 + 15 = 105 minutos
+- Tiempo total de operación = 1440 - 105 = 1335 minutos
+- Número de fallos = 3
+
+$$
+MTTF = \frac{\text{Tiempo total de operación}}{\text{Número de fallos}} \\
+$$
+$$
+MTTF = \frac{1335}{3} = 445 \text{ minutos} = 7 \text{ horas y } 25 \text{ minutos}
+$$
+**3. MTBF (Mean Time Between Failures) - Tiempo promedio entre fallos:**
+
+$MTBF = MTTF + MTTR = 445 + 35 = 480 \text{ minutos} = 8 \text{ horas}$
+
+
+**Resumen:**
+- **MTTR**: 35 minutos
+- **MTTF**: 445 minutos (7h 25min)
+- **MTBF**: 480 minutos (8h)
+
+**Disponibilidad del sistema durante el Cyber Monday:**
+
+$\text{Disponibilidad} = MTTF / (MTTF + MTTR) = 445 / 480 = 0.927 = 92.7\%$
+
 ### Ejercicio 3
 Tengo un sistema que recibe un tráfico de **100.000 RPM (requests per minute)**.  
 ¿Cuántos requests podrían quedar sin respuesta o recibir un status code 5xx para asegurar un uptime del **99,99%** durante el lapso de 1 minuto?
+
+### Respuesta
+Esto es hacer una regla de 3 simple:
+
+Si el $100\%$ de las requests que me llegan por minuto son $100{,}000$, si quiero un uptime del $99.99\%$ necesito:
+
+$$
+\text{Requests totales} = Req_{total} = 100{,}000
+$$
+
+$$
+\text{Porcentaje de uptime requerido} = 99.99\%
+$$
+
+$$
+Req_{uptime} = Req_{total} \times 0.9999 = 100{,}000 \times 0.9999 = 99{,}990
+$$
+
+$$
+Req_{droppeables} = Req_{total} - Req_{uptime} = 100{,}000 - 99{,}990 = 10
+$$
+
+Entonces, la respuesta es que puedo dejar 10 solicitudes sin respuesta por minuto.
 
 ## Redundancia
 
 ### Ejercicio 4
 Manejo de fallos mediante **Redundancia**.  
 Busque un ejemplo para cada uno de los 3 tipos de redundancia (**Información, tiempo y física**) que se utilicen en sistemas reales y especifique dicho sistema.
+
+### Respuesta
+
+Según el material de la materia, existen **3 tipos de redundancia** para el manejo de fallos:
+
+1. **Redundancia de información**: Se añade información redundante (p. ej. códigos de detección o corrección de errores, como en TCP)
+2. **Redundancia de tiempo**: Se realiza una acción varias veces (p. ej. retransmisión de mensajes)
+3. **Redundancia física**: Se usan componentes duplicados (p. ej. replicación de procesos o datos)
+
+#### Ejemplos reales (en tabla):
+
+| Tipo de Redundancia            | Sistema / Ejemplo                                             | Mecanismo                                   | Funcionamiento/Descripción                                                                                                                              | Aplicación                                         |
+|---------------------------------|--------------------------------------------------------------|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
+| **Redundancia de Información**  | Protocolo TCP (Transmission Control Protocol)                | Checksums y códigos de corrección de errores| TCP incluye un checksum de 16 bits en cada segmento; si no coincide, se detecta error y se pide retransmisión                                         | Comunicaciones de internet (HTTP, HTTPS, FTP, etc.)|
+| **Redundancia de Información**  | Sistemas de almacenamiento RAID (RAID 5/6)                   | Paridad distribuida y códigos de corrección | RAID 5/6 almacena información de paridad y permite reconstruir datos perdidos si un disco falla                                                        | Servidores empresariales y centros de datos        |
+| **Redundancia de Tiempo**       | Protocolo TCP - Retransmisión de paquetes                    | Timeout y retransmisión automática          | Si no se recibe ACK en un tiempo, se retransmite el paquete automáticamente                                                                           | Todas las comunicaciones TCP                       |
+| **Redundancia de Tiempo**       | Bases de datos - Transacciones con reintentos                | Retry logic, circuit breakers               | Si una transacción falla por timeout/error temporal, se reintenta automáticamente (ej: DynamoDB reintenta hasta 3 veces)                              | Bases de datos distribuidas (DynamoDB, Cassandra…) |
+| **Redundancia Física**          | Google Search - Clusters de servidores                       | Múltiples servidores detrás de load balancer| Si un servidor falla, el balancer redirige el tráfico automáticamente a servidores sanos                                                              | Google, YouTube, Gmail                            |
+| **Redundancia Física**          | Amazon Web Services (AWS) - Multi-AZ deployments             | Réplicas de bases de datos en varias zonas  | Datos replicados entre zonas de disponibilidad; si una falla, se usa la réplica (ej: Amazon RDS promueve la réplica ante un fallo de zona)             | Aplicaciones empresariales en AWS (Netflix, Airbnb)|
+| **Redundancia Física**          | Sistemas bancarios - Replicación de datos críticos           | Múltiples copias en centros de datos        | Cada transacción se escribe en múltiples réplicas antes de confirmarse (Visa/Mastercard mantiene réplicas en varios data centers)                     | Procesamiento de pagos con tarjetas de crédito     |
+
 
 ## Teorema de CAP
 
@@ -71,12 +158,55 @@ d) **Red Bitcoin**: es del tipo **CP**, se prioriza que toda la red esté en un 
 En la **resiliencia de procesos** existen dos tipos de grupo.  
 Explique cuáles y qué ventajas y desventajas tiene cada uno.
 
+### Respuesta
+
+Según lo visto en clase, hay **2 formas básicas de organizar grupos de procesos** para lograr resiliencia:
+
+1. **Grupos sin coordinador (todos los procesos iguales):**
+   - **Descripción:** Todos los procesos del grupo tienen el mismo rol (en lo que a jerarquía refiere) y toman decisiones de manera colectiva, por ejemplo, a través de votos o protocolos de consenso.
+   - **Ventajas:** 
+     - No hay un único punto de falla, ya que todos los procesos pueden continuar incluso si algunos fallan.
+     - Potencialmente mayor disponibilidad y tolerancia a fallos.
+   - **Desventajas:** 
+     - La coordinación suele ser más compleja, ya que todos deben ponerse de acuerdo.
+     - Puede requerir una mayor cantidad de mensajes y algoritmos más complejos para garantizar la coherencia.
+     - Mayor dificultad para escalar si el grupo es muy grande.
+
+2. **Grupos con coordinador (líder/trabajadores):**
+   - **Descripción:** Uno de los procesos actúa como coordinador o líder, y los demás como trabajadores (ejemplo: modelo primary-backup, o sistemas como DNS).
+   - **Ventajas:**
+     - La toma de decisiones es simple y más rápida, ya que el coordinador centraliza la coordinación.
+     - Menor complejidad de sincronización: el líder determina la acción y los demás replican.
+   - **Desventajas:**
+     - Existe un único punto de falla: si el coordinador cae, hay que elegir uno nuevo (pudiendo haber brechas temporales en la disponibilidad).
+     - El coordinador puede ser cuello de botella si la carga crece mucho.
+
+**Resumen:**  
+- Grupos “todos iguales” tienen mejor tolerancia a fallos y disponibilidad, pero son más difíciles de coordinar.
+- Grupos con coordinador son más fáciles de manejar y más ágiles, pero arrastran el riesgo del SPoF.
+
+Esto se usa según el tipo de aplicación, el número de procesos y el nivel de tolerancia a fallos requerido por el sistema distribuido.
+
 ## Algoritmos de Consenso
 
 ### Ejercicio 7
 ¿Por qué existen diferentes tipos de **algoritmos de consenso**?  
 ¿Cuál es la problemática mayor?  
 ¿Podemos conseguir consenso en un sistema asíncrono?
+
+### Respuesta
+
+Existen diferentes tipos de algoritmos de consenso porque los sistemas distribuidos pueden enfrentarse a distintos modelos de fallo (fallos por caída, fallos arbitrarios/Byzantinos, fallos detectables, etc.), y cada uno de estos escenarios tiene requisitos y desafíos particulares. Además, varía el grado de tolerancia a fallos que se necesita, la cantidad de procesos, las garantías de rendimiento y el entorno de sincronía (sincrónico, parcialmente sincrónico o asíncrono).
+
+La problemática mayor es cómo lograr que un conjunto de procesos, posiblemente afectados por fallos o mensajes retrasados/perdidos, se ponga de acuerdo en una única decisión (por ejemplo, una operación, un valor de estado o el siguiente bloque de una cadena), garantizando que todos los procesos correctos lleguen al mismo resultado incluso ante fallas. Esto se complica si hay fallos de comunicación, fallas arbitrarias (donde un proceso puede comportarse de manera maliciosa o impredecible), o si los procesos pueden funcionar a distintas velocidades.
+
+Respecto a si podemos conseguir consenso en un sistema asíncrono: **no es posible garantizar consenso en un sistema asíncrono puro si existe aunque sea un solo fallo de proceso**. Esto es una limitación fundamental demostrada teóricamente (resultado de Fischer, Lynch y Paterson, "el teorema FLP"), porque en un entorno totalmente asíncrono no es posible diferenciar entre un proceso lento y uno caído. Por eso, los algoritmos prácticos suelen asumir algún nivel de sincronía (aunque sea eventual), o utilizan detección de fallos basada en timeouts y otras técnicas.
+
+En resumen:
+- Hay diferentes algoritmos de consenso porque los escenarios de fallo y requisitos varían mucho.
+- El mayor desafío es coordinar decisiones correctas en presencia de fallos y comunicación incierta.
+- En sistemas asíncronos puros no se puede lograr consenso tolerante a fallos; siempre se requieren algunas suposiciones de sincronía o mecanismos extra para avanzar.
+
 
 ## Comunicación Cliente-Servidor
 

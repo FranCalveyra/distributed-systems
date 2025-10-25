@@ -6,7 +6,7 @@ Explicar por qué los relojes de distintos procesos se desincronizan en un siste
 #### Respuesta
 De por sí, cada máquina tiene su propio reloj de hardware con un cuarzo que oscila a una cierta frecuencia, pero tiene su propio sesgo. Esto implica que, por más que 2 relojes iguales arranquen al mismo tiempo, se van a desfasar eventualmente.
 
-Sumado a eso, al querer sincronizarlos con un protocolo como NTP, tenes latencia para comunicarte con el "servidor central que tiene la hora real", por lo que tenés que calcular un cierto offset y, nuevamente, podés caer en otro desfasaje.
+Sumado a eso, al querer sincronizarlos con un protocolo como NTP, tenés latencia para comunicarte con el "servidor central que tiene la hora real", por lo que tenés que calcular un cierto offset y, nuevamente, podés caer en otro desfasaje.
 
 ### Ejercicio 2
 Describir los problemas que puede generar esta desincronización en:

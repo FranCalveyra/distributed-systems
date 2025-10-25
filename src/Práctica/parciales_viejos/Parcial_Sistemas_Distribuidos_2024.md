@@ -205,7 +205,7 @@
     - [x] c.  Aumentar el grado de confiabilidad en las comunicaciones
     - [x] d.  Tener un mejor control en el manejo de errores
 
-    **Justificación:** Justamente si tenes muchas capas podrías terminar teniendo varios protocolos de comunicación
+    **Justificación:** Justamente si tenés muchas capas podrías terminar teniendo varios protocolos de comunicación
 
 27. En una arquitectura orientada o basada en objetos:
     - [ ] a.  Un objeto representa un solo nodo o computadora en el sistema

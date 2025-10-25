@@ -19,7 +19,7 @@ La resolución de nombres se distribuye a través de múltiples nodos.
 Para los fines de esta materia se considerarán 3 tipos de sistemas distribuidos de naming:
 1. **Flat Naming System** (Sistema de direccionamiento plano)
    1. Se suele implementar en redes P2P (punto a punto) porque normalmente incorporan la información de las redes de los nodos vecinos
-      1. Van haciendo un "teléfono descompuesto" de preguntar "¿vos tenés este recurso?"
+      1. Van haciendo un "teléfono descompuesto" basado en preguntar "¿vos tenés este recurso?"
    2. Ejemplo: BitTorrent.
    3. No hay un servidor centralizado que tiene todo, sino que la info está distribuida entre nodos.
    4. Los sistemas están preparados para la desconexión
