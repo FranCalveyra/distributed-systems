@@ -30,6 +30,10 @@ g. No revelar información sensible antes de la autenticación de las partes.
 - En esta última no te tenés que asegurar de que estas hablando con X, sino que directamente cifrás con su clave pública; lo va a poder descifrar esa persona y nadie más.
   - Es débil ante ataques de suplantación de identidad
 
+### Ejemplos prácticos
+- [Challenge-Response](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/seguridad/challenge-response) (autenticación mutua, punto b): handshake de 3 pasos con HMAC sobre clave simétrica compartida, incluyendo el caso de un atacante sin la clave.
+- [Firma digital](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/seguridad/digital-signature) (integridad + autenticidad, puntos a y c): hash + firma RSA-PSS + verificación, con casos de documento modificado e impostor sin la clave privada.
+
 ## Claves de Sesión
 
 ### Ejercicio 2

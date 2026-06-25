@@ -27,6 +27,10 @@ Lamport arregla el desfasaje y coordina los distintos relojes de todos los proce
 
 Los relojes de vectores ignoran por completo el tiempo y se concentran en **la precedencia de los diferentes eventos**, para poder determinar la causalidad de los eventos.
 
+### Ejemplos prácticos
+- [Relojes de Lamport](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/coordinacion/lamport-clocks): simulación de las 4 reglas de happens-before.
+- [Relojes de vectores](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/coordinacion/vector-clocks): comparación de vectores, concurrencia y un conflicto tipo Git.
+
 ## Exclusión Mutua
 ### Ejercicio 1
 Comparar los tres algoritmos de exclusión mutua vistos en clase:
@@ -70,6 +74,11 @@ Para cada algoritmo, analizar:
   - En cuanto a **número de mensajes**, es bastante hablador: para cada acceso, cada proceso manda $N-1$ mensajes de pedido y recibe $N-1$ OKs, así que son $2(N-1)$ mensajes por acceso (sin contar los reintentos si hay empates o caídas).
   - **Tolerancia a fallas**: es baja, porque si un nodo se cae y no responde, el resto se queda esperando el OK y nadie accede al recurso. O sea, un nodo caído puede trabar todo el sistema.
   - **Latencia**: depende de la velocidad de respuesta de todos los nodos, pero en el mejor caso es baja porque apenas llegan los OKs ya podés entrar. En el peor caso, si hay muchos compitiendo o alguno lento, se puede hacer eterna la espera.
+
+### Ejemplo práctico
+Implementación de Ricart-Agrawala con nodos concurrentes reales (goroutines de Go) comunicándose por channels, incluyendo un guard que detecta violaciones de exclusión mutua.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/coordinacion/mutex-ricart-agrawala)
 
 ## Algoritmos de elección
 ### Ejercicio 1
@@ -144,6 +153,11 @@ Comparar el algoritmo de elección de coordinador basado en anillos con el algor
     - Que, simplificando en una sola fórmula, sería $\boxed{N(N-1)}$
   - **Tolerancia a fallas**: es alta, por lo que dijimos antes. Si se cae un nodo coordinador, arranca una nueva votación y se define otro coordinador.
     - Si entra un nuevo nodo con ID más alto que el coordinador actual, se vota de vuelta.
+
+### Ejemplo práctico
+Algoritmo Bully con nodos concurrentes (Go), simulando la caída del coordinador y verificando que el nodo con mayor ID entre los vivos gane la nueva elección. También aplica para entender Raft, que resuelve el mismo problema (coordinador único) pero por timeouts en lugar de por ID — ver el [ejemplo de Raft](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/tolerancia/raft-toy) en la guía de Tolerancia.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/coordinacion/leader-election-bully)
 
 ## Precedencia de eventos
 ### Ejercicio 1

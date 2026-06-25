@@ -31,6 +31,11 @@ En general, ¿en qué se diferencian los modelos de consistencia centrados en da
 ### Respuesta
 La consistencia centrada en datos intenta mantener la consistencia de todo el sistema para todos los clientes por igual, es decir, la _consistencia de todos los datos_, mientras que la centrada en el cliente trata de que el cliente que consulta el data store vea algo consistente **para él**, no importa si para otros clientes es inconsistente.
 
+#### Ejemplo práctico
+Verificación por código de dos modelos centrados en datos: el ejemplo clásico de consistencia secuencial (Tanenbaum, enumeración por fuerza bruta de los 90 entrelazados válidos) y un caso donde un sistema es causalmente consistente pero NO secuencialmente consistente.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/consistencia_replicacion/consistency-models)
+
 ### Ejercicio 6
 ##### Actividad no obligatoria:
 Actividad de tutorial guiado para el desarrollo de un smart contract en Ethereum “Pet Shop Tutorial”.

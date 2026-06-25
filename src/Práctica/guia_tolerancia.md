@@ -207,6 +207,10 @@ En resumen:
 - El mayor desafío es coordinar decisiones correctas en presencia de fallos y comunicación incierta.
 - En sistemas asíncronos puros no se puede lograr consenso tolerante a fallos; siempre se requieren algunas suposiciones de sincronía o mecanismos extra para avanzar.
 
+### Ejemplo práctico
+Implementación mínima de Raft (solo elección de líder + heartbeats, sin replicación de log) en Go, con timeouts reales y detección de caída del líder forzando una nueva elección.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/tolerancia/raft-toy)
 
 ## Comunicación Cliente-Servidor
 
@@ -272,3 +276,10 @@ f) Es imperativo que estén ordenados para mantener trazabilidad, y lo ideal ser
 
 > Atomic es necesariamente Ordenado
 > El causal puede estar desordenado, mientras quede clara la relación causal
+
+## Transacciones distribuidas
+
+### Ejemplo práctico
+Two-Phase Commit (2PC) con 1 coordinador y N participantes, usando el ejemplo de la teórica (reservar hotel + auto + vuelo): fase de votación (PREPARE) y fase de decisión (COMMIT si todos votaron YES, ABORT si alguno votó NO).
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/tolerancia/two-phase-commit)

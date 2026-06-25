@@ -34,6 +34,11 @@ Difieren en los siguientes puntos:
 | **Resolución**    | Broadcasting  | Consultas distribuidas            |
 | **Uso**           | Redes P2P     | Internet / Redes organizacionales |
 
+#### Ejemplo práctico
+Chord, el sistema de naming basado en DHT (Distributed Hash Table) que menciona la teórica como "el representante típico": anillo con consistent hashing y finger tables, resolviendo lookups en O(log N) en vez de caminar el anillo nodo por nodo.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/naming/chord-dht)
+
 ### Ejercicio 5
 En la solución de difusión por broadcast para Flat Naming System:
 

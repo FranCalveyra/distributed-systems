@@ -128,6 +128,11 @@ Yendo al lado de seguridad, MPI no tiene mecanismos de seguridad integrados. Dep
 
 Por último, en cuanto a compatibilidad, MPI no es universal como HTTP. Es un bodrio de implementar para que sea compatible.
 
+### Ejemplo práctico
+Dos ejemplos mínimos con `mpi4py` (scatter/reduce y pasaje de token en anillo), que muestran el contexto compartido, los ranks y las operaciones colectivas y punto a punto.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/comunicacion/mpi)
+
 ## ZeroMQ
 Esto está explicado muy bien en la teórica, así que veo innecesario hacer los ejercicios.
 
@@ -204,3 +209,17 @@ Explicar su decisión.
   - Por ahí no quiero estar pendiente constantemente de que el Uber se está moviendo y me quedo haciendo otra cosa con el teléfono (mandarle un mensaje a un amigo, por ejemplo).
   - La ubicación del Uber se va a seguir actualizando en background/con la aplicación cerrada, y yo me entero recién cuando vuelvo a entrar. Mi pedido no se cancela si la cierro/pongo en 2do plano.
   - Para esto es necesario que sea un esquema **asincrónico y persistente**.
+
+### Ejemplo práctico
+Producer/consumer contra un broker **RabbitMQ** real (vía docker-compose), en Python con `pika`. Muestra el patrón work-queue, el desacople temporal entre productor y consumidor, y la garantía del MoM: el mensaje queda encolado en destino aunque el consumer esté caído.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/comunicacion/mom)
+
+## Broadcasting, Multicasting y Gossip
+### Ejercicio 1
+Implementar una simulación de un protocolo epidémico y comparar las estrategias `push`, `pull` y `push-pull`. Implementar también un broadcasting por flooding y medir su costo según la topología.
+
+#### Respuesta
+Dos simulaciones en Python puro. La epidémica confirma que `push-pull` converge en menos rondas; la de flooding muestra el costo lineal en un árbol vs cuadrático en un grafo completo.
+
+[Link al código fuente](https://github.com/FranCalveyra/distributed-systems/tree/main/src/Pr%C3%A1ctica/comunicacion/gossip)

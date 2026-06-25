@@ -1,0 +1,12 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: dist-sys-rabbitmq
+    ports:
+      - "5672:5672"     # AMQP — por acá se conectan producer y consumer
+      - "15672:15672"   # Management UI — http://localhost:15672 (user/pass: guest/guest)
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
